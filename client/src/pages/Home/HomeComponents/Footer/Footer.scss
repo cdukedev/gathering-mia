@@ -1,0 +1,88 @@
+$primary-light-black: #323232;
+$primary-silver: #AFAFAF;
+$primary-white: #FFFFFF;
+$secondary-black: #000000;
+$secondary-mercury: #E1E1E1;
+$secondary-alabaster: #fafafa;
+
+.contact{
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-light-black;
+    color: $primary-white;
+    margin: 0;
+    margin-top: 15vw;
+    border-radius: 15px 15px 0 0;
+    &__hr{
+        width: 100%;
+        border: 1px solid $primary-silver;
+        margin-right: 2vw;
+        margin-top: 5vw;
+    }
+    &__title {
+        font-size: 2.25rem;
+        font-weight: 600;
+        padding-top: 15vw;
+    }
+    &__social{
+        &-links{
+            display: flex;
+            gap: 2.75rem;
+            padding: 12vw;
+        }
+        &-link{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &-image{
+                width: 2.25rem;
+            }
+            &--height{
+                height: 2.25rem;
+            }
+        }
+    }
+    &__content {
+        line-height: 1.5rem;
+        color: $primary-white;
+        &-3{
+            padding: 3rem 0 0 0;    
+        }
+        &-items {
+            color: $primary-white;
+            padding-top: 2rem;
+            display: flex;
+            font-size: 1.15rem;
+            flex-direction: column;
+        }
+        &-item{
+            color: $primary-white;
+            width: 75%;
+            text-align: center;
+            &--link{
+                color: $primary-white;
+                text-decoration: none;
+            }
+            &--bold{
+                font-weight: 600;
+            }
+            &--copyright{
+                font-size: .75rem;
+                font-weight: 400;
+                width: 100%;
+                padding: .5rem 0 1rem 0;
+                margin: 0;
+                color: $primary-white;
+                text-align: center;
+                background-color: $primary-light-black;
+            }
+        }
+        &-bottom{
+            font-size: 2rem;
+            &--link {
+                color: $primary-white;
+                text-decoration: none;
+            }
+        }
+    }
+}
