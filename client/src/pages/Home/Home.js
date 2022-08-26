@@ -7,6 +7,7 @@ import Logo from "../../assets/logo/logo.svg";
 import React from "react";
 import TakePart from "./HomeComponents/TakePart/TakePart";
 import NeedHelp from "./HomeComponents/NeedHelp/NeedHelp";
+import Desktop from "./HomeComponents/Desktop/Desktop";
 
 class Home extends React.Component {
   state = {
@@ -18,22 +19,26 @@ class Home extends React.Component {
     });
   };
   render() {
-    return (
-      <div className="home" data-test="home">
-        <NavMenu
-          navMenu={this.state.navMenu}
-          handleNavMenu={this.handleNavMenu}
-        />
-        <img className="home__logo" src={Logo} alt="logo" />
-        <Gallery />
+    if (window.innerWidth > 680) {
+      return <Desktop />;
+    } else {
+      return (
+        <div className="home" data-test="home">
+          <NavMenu
+            navMenu={this.state.navMenu}
+            handleNavMenu={this.handleNavMenu}
+          />
+          <img className="home__logo" src={Logo} alt="logo" />
+          <Gallery />
 
-        <hr className="home__hr" />
-        <AboutUs />
-        <TakePart />
-        <NeedHelp />
-        <Footer />
-      </div>
-    );
+          <hr className="home__hr" />
+          <AboutUs />
+          <TakePart />
+          <NeedHelp />
+          <Footer />
+        </div>
+      );
+    }
   }
 }
 export default Home;

@@ -1219,18 +1219,18 @@ class MapPage extends React.Component {
       },
     ],
   };
-  // componentDidMount() {
-  //   navigator.geolocation.getCurrentPosition(
-  //     function (position) {
-  //       this.setState({
-  //         coords: {
-  //           lat: position.coords.latitude,
-  //           lng: position.coords.longitude,
-  //         },
-  //       });
-  //     }.bind(this)
-  //   );
-  // }
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        this.setState({
+          coords: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+        });
+      }.bind(this)
+    );
+  }
   handleMenuClick = (clickedMenu) => {
     this.setState({
       menu: clickedMenu,
