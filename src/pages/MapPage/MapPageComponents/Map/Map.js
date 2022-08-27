@@ -41,7 +41,7 @@ const Map = (props) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.MAP_KEY}>
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         options={createMapOptions}
