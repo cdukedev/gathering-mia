@@ -1,7 +1,6 @@
 {
   "name": "gathering",
   "version": "0.1.0",
-  "homepage": "https://cdukedev.github.io/gatheringmia",
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.12.1",
@@ -20,17 +19,12 @@
     "sass": "^1.54.2",
     "web-vitals": "^2.1.4"
   },
-  "engines": {
-    "node": "17.4.0",
-    "npm": "8.13.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^10.6.0",
-    "gh-pages": "^4.0.0"
+    "cypress": "^10.6.0"
   }
 }
