@@ -14,7 +14,7 @@ import Splash from "../../Components/Splash/Splash";
 class MapPage extends React.Component {
   state = {
     menu: "defaultMenu",
-    coords: { lat: 25.8011398, lng: -80.1993179 },
+    coords: null,
     zone: null,
     foodBankToggle: true,
     communityGardenToggle: true,
@@ -1222,12 +1222,21 @@ class MapPage extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        this.setState({
-          coords: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
-        });
+        if (position.coords.latitude && position.coords.longitude) {
+          this.setState({
+            coords: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        } else {
+          this.setState({
+            coords: {
+              lat: 25.7411098,
+              lng: -80.0515285,
+            },
+          });
+        }
       }.bind(this)
     );
   }
