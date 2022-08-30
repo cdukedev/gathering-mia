@@ -1267,7 +1267,7 @@ class MapPage extends React.Component {
     if (!this.state.coords) {
       return <Splash />;
     } else {
-      if (this.state.menu === "MapDeliveries") {
+      if (this.state.menu === "mapDeliveries") {
         return (
           <div className="map-deliveries">
             <Map
@@ -1298,7 +1298,7 @@ class MapPage extends React.Component {
             />
           </div>
         );
-      } else if (this.state.menu === "MapHelp") {
+      } else if (this.state.menu === "mapHelp") {
         return (
           <div className="map-help">
             <Map
@@ -1315,7 +1315,7 @@ class MapPage extends React.Component {
             <BackButton />
           </div>
         );
-      } else if (this.state.menu === "MapFilter") {
+      } else if (this.state.menu === "mapFilter") {
         return (
           <div className="map-filter">
             <Map
@@ -1351,7 +1351,7 @@ class MapPage extends React.Component {
             <BackButton />
           </div>
         );
-      } else if (this.state.menu === "QRScanner") {
+      } else if (this.state.menu === "qrScanner") {
         return (
           <div className="QR-scanner">
             <QRScanner handleMenuClick={this.handleMenuClick} />

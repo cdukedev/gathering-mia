@@ -82,7 +82,7 @@ function MapDeliveries(props) {
                         alert(
                           "Directions are being opened in a new page, you will need to return to this page once you have arrived at the food bank"
                         );
-                        props.handleDeliveryClick("QRScanner", foodBank.zone);
+                        props.handleDeliveryClick("qrScanner", foodBank.zone);
                       }}
                       zone={foodBank.zone}
                       target="_blank"

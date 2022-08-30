@@ -14,21 +14,21 @@ function MapMenu(props) {
         </Link>
         <img
           onClick={() => {
-            props.handleMenuClick("MapHelp");
+            props.handleMenuClick("mapHelp");
           }}
           src={helpButton}
           alt="help button"
         />
         <img
           onClick={() => {
-            props.handleMenuClick("MapFilter");
+            props.handleMenuClick("mapFilter");
           }}
           src={filterButton}
           alt="filter button"
         />
         <img
           onClick={() => {
-            props.handleMenuClick("MapDeliveries");
+            props.handleMenuClick("mapDeliveries");
           }}
           src={searchButton}
           alt="search button"
