@@ -1358,7 +1358,7 @@ class MapPage extends React.Component {
             <BackButton />
           </div>
         );
-      } else if (this.state.menu === "QRScanner") {
+      } else if (this.state.menu === "qrScanner") {
         return (
           <div className="QR-scanner">
             <QRScanner handleMenuClick={this.handleMenuClick} />
