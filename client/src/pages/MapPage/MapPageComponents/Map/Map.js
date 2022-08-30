@@ -30,7 +30,7 @@ const Map = (props) => {
     fullscreenControl: false,
   };
 
-  const markerClicked = (marker, index) => {
+  const markerClicked = (index) => {
     setActiveInfoWindow(index);
   };
 
@@ -64,7 +64,7 @@ const Map = (props) => {
                 ? communityGarden
                 : null
             }
-            onClick={() => markerClicked(marker, index)}
+            onClick={() => markerClicked(index)}
           >
             {activeInfoWindow === index && (
               <InfoWindow position={marker.position}>
