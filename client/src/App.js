@@ -7,14 +7,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/gathering">
-          <Home />
-        </Route>
         <Route path="/map">
           <MapPage />
+        </Route>
+        <Route path="/">
+          <Home />
         </Route>
       </Switch>
     </Router>
