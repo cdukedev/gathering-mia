@@ -10,9 +10,9 @@ function Desktop() {
       </div>
       <div className="desktop-content__container">
         <p className="desktop-content">
-          We are excited to have to join us! This site is intented for mobile
+          We are excited to have you join us! This site is intented for mobile
           use. Please scan the QR code to navigate to our site on your mobile
-          device
+          device.
         </p>
         <div>
           <img
@@ -22,7 +22,7 @@ function Desktop() {
           />
         </div>
         <span className="desktop-content">
-          You may also input gathering-mia.live into your favorite mobile
+          You may also type gathering-mia.live into your favorite mobile
           browser.
         </span>
       </div>

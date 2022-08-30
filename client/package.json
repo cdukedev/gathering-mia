@@ -1,6 +1,7 @@
 {
   "name": "gathering",
   "version": "0.1.0",
+  "stack": "heroku-20",
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.12.1",
