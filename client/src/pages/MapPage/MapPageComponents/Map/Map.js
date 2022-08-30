@@ -10,7 +10,6 @@ import communityGarden from "../../../../assets/icons/community-garden.svg";
 
 const Map = (props) => {
   const initialMarkers = props.initialMarkers;
-  const [map] = useState();
   const [activeInfoWindow, setActiveInfoWindow] = useState("");
   const [markers] = useState(initialMarkers);
   const [center] = useState({
@@ -33,12 +32,6 @@ const Map = (props) => {
 
   const markerClicked = (marker, index) => {
     setActiveInfoWindow(index);
-    console.log("before marker click", center);
-    map.setCenter({
-      lat: marker.position.lat,
-      lng: marker.position.lng,
-    });
-    console.log("after marker click", center);
   };
 
   return (
