@@ -1223,6 +1223,11 @@ class MapPage extends React.Component {
     navigator.geolocation.getCurrentPosition(
       function (position) {
         if (position.coords.latitude && position.coords.longitude) {
+          console.log(
+            "componantDidMount",
+            position.coords.latitude,
+            position.coords.longitude
+          );
           this.setState({
             coords: {
               lat: position.coords.latitude,
@@ -1230,6 +1235,7 @@ class MapPage extends React.Component {
             },
           });
         } else {
+          console.log("componantDidMount", "no coords");
           this.setState({
             coords: {
               lat: 25.7411098,
@@ -1257,6 +1263,7 @@ class MapPage extends React.Component {
       foodBankToggle: !this.state.foodBankToggle,
     });
   };
+
   handleCommunityGardenToggle = () => {
     this.setState({
       communityGardenToggle: !this.state.communityGardenToggle,
@@ -1267,7 +1274,7 @@ class MapPage extends React.Component {
     if (!this.state.coords) {
       return <Splash />;
     } else {
-      if (this.state.menu === "mapDeliveries") {
+      if (this.state.menu === "MapDeliveries") {
         return (
           <div className="map-deliveries">
             <Map
@@ -1298,7 +1305,7 @@ class MapPage extends React.Component {
             />
           </div>
         );
-      } else if (this.state.menu === "mapHelp") {
+      } else if (this.state.menu === "MapHelp") {
         return (
           <div className="map-help">
             <Map
@@ -1315,7 +1322,7 @@ class MapPage extends React.Component {
             <BackButton />
           </div>
         );
-      } else if (this.state.menu === "mapFilter") {
+      } else if (this.state.menu === "MapFilter") {
         return (
           <div className="map-filter">
             <Map
@@ -1351,7 +1358,7 @@ class MapPage extends React.Component {
             <BackButton />
           </div>
         );
-      } else if (this.state.menu === "qrScanner") {
+      } else if (this.state.menu === "QRScanner") {
         return (
           <div className="QR-scanner">
             <QRScanner handleMenuClick={this.handleMenuClick} />

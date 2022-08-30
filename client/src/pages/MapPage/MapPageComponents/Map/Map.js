@@ -10,16 +10,16 @@ import communityGarden from "../../../../assets/icons/community-garden.svg";
 
 const Map = (props) => {
   const initialMarkers = props.initialMarkers;
+  const [map] = useState();
   const [activeInfoWindow, setActiveInfoWindow] = useState("");
   const [markers] = useState(initialMarkers);
+  const [center] = useState({
+    lat: props.coords.lat,
+    lng: props.coords.lng,
+  });
   const containerStyle = {
     width: "100vw",
     height: `${props.height}`,
-  };
-
-  const center = {
-    lat: parseFloat(props.coords.lat),
-    lng: parseFloat(props.coords.lng),
   };
 
   const createMapOptions = {
@@ -30,14 +30,15 @@ const Map = (props) => {
     rotateControl: false,
     fullscreenControl: false,
   };
-  const mapClicked = (event) => {
-    event.preventDefault();
-    console.log(event.latLng.lat(), event.latLng.lng());
-  };
 
   const markerClicked = (marker, index) => {
     setActiveInfoWindow(index);
-    console.log(marker, index);
+    console.log("before marker click", center);
+    map.setCenter({
+      lat: marker.position.lat,
+      lng: marker.position.lng,
+    });
+    console.log("after marker click", center);
   };
 
   return (
@@ -46,8 +47,7 @@ const Map = (props) => {
         mapContainerStyle={containerStyle}
         options={createMapOptions}
         center={center}
-        zoom={12}
-        onClick={mapClicked}
+        zoom={13}
       >
         {markers.map((marker, index) => (
           <Marker
@@ -71,7 +71,7 @@ const Map = (props) => {
                 ? communityGarden
                 : null
             }
-            onClick={(event) => markerClicked(marker, index, event)}
+            onClick={() => markerClicked(marker, index)}
           >
             {activeInfoWindow === index && (
               <InfoWindow position={marker.position}>
