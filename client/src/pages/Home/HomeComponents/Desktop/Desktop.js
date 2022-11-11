@@ -1,5 +1,5 @@
 import Logo from "../../../../assets/logo/desktop-logo.png";
-import QRCode from "../../../../assets/icons/desktop-qr.png";
+import QRCode from "../../../../assets/icons/desktop_qr.png";
 import "./Desktop.scss";
 
 function Desktop() {
