@@ -38,7 +38,7 @@ To Visit App:
 
 View intented as a mobile web application
 
-https://gatheringmia.herokuapp.com/
+https://gathering-mia.live/
 
 ## Reflection
 
