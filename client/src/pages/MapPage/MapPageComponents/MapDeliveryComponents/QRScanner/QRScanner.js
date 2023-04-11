@@ -1,7 +1,10 @@
+import React, { useContext } from "react";
 import QRScannerImage from "../../../../../assets/images/qr-scanner-image.png";
 import "./QRScanner.scss";
 import BackButton from "../../../../../Components/BackButton/BackButton.js";
-function QRScanner(props) {
+import { MapPageContext } from "../../../../../context/MapPageContext";
+function QRScanner() {
+  const { handleMenuClick } = useContext(MapPageContext);
   return (
     <>
       <div className="qr-scanner">
@@ -23,7 +26,7 @@ function QRScanner(props) {
         </div>
         <button
           className="qr-scanner__button"
-          onClick={() => props.handleMenuClick("deliveries")}
+          onClick={() => handleMenuClick("deliveries")}
         >
           Begin Deliveries
         </button>

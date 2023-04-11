@@ -1,7 +1,11 @@
+import React, { useContext } from "react";
 import "./MapDeliveries.scss";
 import MapMenuArrow from "../../../../assets/icons/map-menu-arrow.svg";
-function MapDeliveries(props) {
-  const foodBanks = props.foodBanks;
+import { MapPageContext } from "../../../../context/MapPageContext";
+
+function MapDeliveries() {
+  const { coords, foodBanks, handleMenuClick, handleDeliveryClick } =
+    useContext(MapPageContext);
 
   const calculateDistance = (centerLocation, foodBank) => {
     const { lat, lng } = centerLocation;
@@ -13,15 +17,17 @@ function MapDeliveries(props) {
   };
 
   foodBanks.map((foodBank) => {
-    let distance = calculateDistance(props.coords, foodBank.position);
-    //convert the distance to miles and round to 1 decimal places if it is less than 10 miles and round to 0 decimal places if it is greater than or equal to 10 miles
-    distance = distance.distance * 69.2;
-    if (distance < 10) {
-      foodBank.distance = Math.round(distance * 10) / 10;
+    if (coords) {
+      let distance = calculateDistance(coords, foodBank.position);
+      distance = distance.distance * 69.2;
+      if (distance < 10) {
+        foodBank.distance = Math.round(distance * 10) / 10;
+      } else {
+        foodBank.distance = Math.round(distance);
+      }
     } else {
-      foodBank.distance = Math.round(distance);
+      foodBank.distance = undefined;
     }
-    //   foodBank.distance = distance.distance * 69.2;
     return foodBank;
   });
 
@@ -35,7 +41,7 @@ function MapDeliveries(props) {
         <img
           className="map-deliveries__top-row--arrow"
           onClick={() => {
-            props.handleMenuClick("defaultMenu");
+            handleMenuClick("defaultMenu");
           }}
           src={MapMenuArrow}
           alt="menu arrow to close helper"
@@ -44,7 +50,6 @@ function MapDeliveries(props) {
       <h3 className="map-deliveries__top-row--header">
         Select a location to begin delivering
       </h3>
-      {/* map sorted food bank into a div, left side with name, address and Phone number. Right side with distance and hget driections */}
       <div className="map-deliveries__top-row--food-bank--container">
         {sortedFoodBanks.map((foodBank) => {
           return (
@@ -69,25 +74,23 @@ function MapDeliveries(props) {
                 </div>
                 <div className="map-deliveries__top-row--food-bank-right">
                   <div className="map-deliveries__top-row--food-bank--item map-deliveries__top-row--food-bank-right--distance">
-                    {foodBank.distance} miles
+                    {foodBank.distance
+                      ? `${foodBank.distance} miles`
+                      : "Loading..."}
                   </div>
                   <div>
                     <a
                       className="map-deliveries__top-row--food-bank-right--directions"
-                      // open in new tab
-                      //add an alert that the directions are being opened in a new tab
                       onClick={() => {
-                        console.log("directions clicked");
-                        console.log(foodBank.zone);
                         alert(
                           "Directions are being opened in a new page, you will need to return to this page once you have arrived at the food bank"
                         );
-                        props.handleDeliveryClick("qrScanner", foodBank.zone);
+                        handleDeliveryClick("qrScanner", foodBank.zone);
                       }}
                       zone={foodBank.zone}
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`https://www.google.com/maps/dir/?api=1&origin=${props.coords.lat},${props.coords.lng}&destination=${foodBank.position.lat},${foodBank.position.lng}`}
+                      href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${foodBank.position.lat},${foodBank.position.lng}`}
                     >
                       Get Directions
                     </a>
@@ -101,4 +104,5 @@ function MapDeliveries(props) {
     </div>
   );
 }
+
 export default MapDeliveries;

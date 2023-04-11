@@ -1,11 +1,13 @@
 import "./Splash.scss";
 import splash from "../../assets/images/splash.svg";
 
-function Splash() {
+function Splash({ handleGeolocation }) {
   return (
     <>
       <img className="splash" src={splash} alt="splash screen" />
       <div className="container">
+        <button onClick={handleGeolocation}>Get my location</button>
+
         <div className="animation-wrapper">
           <div id="img1" className="img">
             <div id="img2" className="img">
