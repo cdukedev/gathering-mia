@@ -12,13 +12,14 @@ const MapPageProvider = ({ children }) => {
   const [zone, setZone] = useState(null);
   const [foodBankToggle, setFoodBankToggle] = useState(true);
   const [communityGardenToggle, setCommunityGardenToggle] = useState(true);
+  //set toggle for button that confirms use of geolocation
+  const [geolocationToggle, setGeolocationToggle] = useState(false);
 
   const handleMenuClick = useCallback((clickedMenu) => {
     setMenu(clickedMenu);
   }, []);
 
   const handleDeliveryClick = useCallback((clicked, clickedZone) => {
-
     setMenu(clicked);
     setZone(clickedZone);
   }, []);
@@ -60,11 +61,13 @@ const MapPageProvider = ({ children }) => {
     recipients,
     communityGardens,
     initialMarkers,
+    geolocationToggle,
     handleMenuClick,
     handleDeliveryClick,
     handleFoodBankToggle,
     handleCommunityGardenToggle,
     handleGeolocationRequest,
+    setGeolocationToggle
   };
 
   return (
