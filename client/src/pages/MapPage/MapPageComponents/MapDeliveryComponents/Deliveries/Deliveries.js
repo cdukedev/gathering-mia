@@ -1,76 +1,132 @@
 import React, { useEffect, useContext, useState } from "react";
-
 import "./Deliveries.scss";
 import { MapPageContext } from "../../../../../context/MapPageContext";
+
 function Deliveries() {
-  const [sortedrecipients, setSortedRecipients] = useState([]);
+  const [sortedRecipients, setSortedRecipients] = useState([]);
   const [finalDestination, setFinalDestination] = useState({
-    lat: 25.2801423,
+    lat: 24.2801423,
     lng: -80.6620736,
   });
+  const [capacity, setCapacity] = useState(9);
+  const [loading, setLoading] = useState(true);
+
   const {
     recipients,
     coords,
-    position,
     zone,
     handleMenuClick,
     handleGeolocationRequest,
   } = useContext(MapPageContext);
+
+  console.log("sorted recipients", sortedRecipients);
+
   useEffect(() => {
     handleGeolocationRequest();
   }, [handleGeolocationRequest]);
+
   useEffect(() => {
-    const calculateDistance = (centerLocation, recipient) => {
-      console.log("centerLocation", centerLocation);
-      console.log("recipient", recipient);
-      if (!recipient) {
-        return null;
-      }
-
-      const { lat, lng } = centerLocation;
-      const { lat: recipientLat, lng: recipientLng } = recipient;
-
-      const distance = Math.sqrt(
-        Math.pow(lat - recipientLat, 2) + Math.pow(lng - recipientLng, 2)
-      );
-      return { distance };
-    };
-
-    recipients.map((recipient) => {
-      const distanceObj = calculateDistance(coords, recipient.position);
-
-      if (distanceObj) {
-        let distance = distanceObj.distance * 69.2;
-
-        if (distance < 10) {
-          recipient.distance = Math.round(distance * 10) / 10;
-        } else {
-          recipient.distance = Math.round(distance);
-        }
-      } else {
-        recipient.distance = null;
-      }
-
-      return recipient;
-    });
-
     setSortedRecipients(
-      recipients.sort((a, b) => {
-        return a.distance - b.distance;
-      })
+      findOptimalPath(recipients, coords, finalDestination, capacity, zone)
     );
-  }, [recipients, coords, position]);
+    setLoading(false);
+  }, [recipients, coords, finalDestination]);
 
-  return (
-    <div className="deliveries__container">
-      <h3 className="deliveries__top-row--header">
-        Deliver in the order given for the shortest total trip.
-      </h3>
-      <div className="deliveries__top-row--recipient--container">
-        {sortedrecipients.map((recipient) => {
-          console.log(recipient.zone);
-          console.log(zone);
-          if (recipient.zone === zone) {
+  function findOptimalPath(
+    recipients,
+    currentLocation,
+    finalDestination,
+    capacity,
+    zone
+  ) {
+    let optimalPath = [];
+    // filter all recipients by zone
+    let filteredRecipients = recipients.filter(
+      (recipient) => recipient.zone == zone
+    );
+    let remainingRecipients = [...filteredRecipients];
+    while (remainingRecipients.length > 0 && capacity > optimalPath.length) {
+      let count = 0;
+      let closestRecipient = findClosestRecipient(
+        remainingRecipients,
+        currentLocation,
+        finalDestination
+      );
+      closestRecipient.distance = calculateDistance(
+        currentLocation,
+        closestRecipient.position
+      );
+      optimalPath.push(closestRecipient);
+      remainingRecipients = remainingRecipients.filter(
+        (recipient) => recipient.id !== closestRecipient.id
+      );
+      currentLocation = closestRecipient.position;
+      count = count + 1;
+    }
+    console.log("optimal path", optimalPath);
+    return optimalPath;
+  }
+
+  function findClosestRecipient(recipients, currentLocation, finalDestination) {
+    return recipients.reduce((closest, recipient) => {
+      const distanceToRecipient = calculateDistance(
+        currentLocation,
+        recipient.position
+      );
+
+      const distanceToFinalDestination = calculateDistance(
+        recipient.position,
+        finalDestination
+      );
+      if (
+        !closest ||
+        (distanceToRecipient <
+          calculateDistance(currentLocation, closest.position) &&
+          distanceToFinalDestination <
+            calculateDistance(closest.position, finalDestination))
+      ) {
+        return recipient;
+      }
+
+      return closest;
+    }, null);
+  }
+
+  function calculateDistance(locationA, locationB) {
+    if (!locationA || !locationB) return null;
+
+    const { lat: latA, lng: lngA } = locationA;
+    const { lat: latB, lng: lngB } = locationB;
+
+    if (
+      typeof latA !== "number" ||
+      typeof lngA !== "number" ||
+      typeof latB !== "number" ||
+      typeof lngB !== "number"
+    ) {
+      return null;
+    }
+
+    const distance = Math.sqrt(
+      Math.pow(latA - latB, 2) + Math.pow(lngA - lngB, 2)
+    );
+
+    return distance < 10
+      ? Math.round(distance * 10) / 10
+      : Math.round(distance);
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  } else {
+    console.log("hit second return");
+    return (
+      <div className="deliveries__container">
+        <h3 className="deliveries__top-row--header">
+          Deliver in the order given for the shortest total trip.
+        </h3>
+        <div className="deliveries__top-row--recipient--container">
+          {sortedRecipients.map((recipient) => {
             return (
               <div
                 className="deliveries__top-row--recipient--radius"
@@ -116,21 +172,20 @@ function Deliveries() {
                 </div>
               </div>
             );
-          } else {
-            return null;
-          }
-        })}
-        <button
-          className="top-row-button"
-          onClick={() => {
-            alert("Thank you for completing your deliveries!");
-            handleMenuClick("defaultMenu");
-          }}
-        >
-          Click Here to confirm that all deliveries have been completed.
-        </button>
+          })}
+          <button
+            className="top-row-button"
+            onClick={() => {
+              alert("Thank you for completing your deliveries!");
+              handleMenuClick("defaultMenu");
+            }}
+          >
+            Click Here to confirm that all deliveries have been completed.
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
 export default Deliveries;
