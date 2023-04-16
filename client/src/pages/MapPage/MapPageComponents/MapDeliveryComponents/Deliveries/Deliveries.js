@@ -19,8 +19,6 @@ function Deliveries() {
     handleGeolocationRequest,
   } = useContext(MapPageContext);
 
-  console.log("sorted recipients", sortedRecipients);
-
   useEffect(() => {
     handleGeolocationRequest();
   }, [handleGeolocationRequest]);
@@ -63,7 +61,7 @@ function Deliveries() {
       currentLocation = closestRecipient.position;
       count = count + 1;
     }
-    console.log("optimal path", optimalPath);
+
     return optimalPath;
   }
 
@@ -119,7 +117,7 @@ function Deliveries() {
   if (loading) {
     return <div>Loading...</div>;
   } else {
-    console.log("hit second return");
+
     return (
       <div className="deliveries__container">
         <h3 className="deliveries__top-row--header">

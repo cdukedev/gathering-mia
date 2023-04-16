@@ -716,9 +716,5 @@ fs.writeFile(
       console.error("Error writing recipients.json:", err);
       return;
     }
-
-    console.log("recipients.json updated successfully.");
   }
 );
-
-console.log(recipientsWithIntZoneAndId);
