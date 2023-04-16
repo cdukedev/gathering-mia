@@ -115,7 +115,7 @@ function Footer() {
         </div>
         <div className="contact__content-3">
           <span className="contact__content-bottom">
-            <Link to="./" className="contact__content-bottom--link">
+            <Link to="/" className="contact__content-bottom--link">
               GatheringMIA
             </Link>
           </span>

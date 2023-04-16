@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import QRScannerImage from "../../../../../assets/images/qr-scanner-image.png";
 import "./QRScanner.scss";
-import BackButton from "../../../../../Components/BackButton/BackButton.js";
+import BackButton from "../../../../../components/BackButton/BackButton.js";
 import { MapPageContext } from "../../../../../context/MapPageContext";
 function QRScanner() {
   const { handleMenuClick } = useContext(MapPageContext);

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function BackButton() {
   return (
     <div className="back-button">
-      <Link to="./">
+      <Link to="/">
         <img src={backButton} alt="back button" />
       </Link>
     </div>

@@ -9,7 +9,7 @@ function MapMenu(props) {
   return (
     <div className="map-menu__container">
       <div className="map-menu__buttons">
-        <Link to="./">
+        <Link to="/">
           <img src={homeButton} alt="home button" />
         </Link>
         <img

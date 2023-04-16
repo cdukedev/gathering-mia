@@ -7,9 +7,9 @@ import MapHelp from "./MapPageComponents/MapHelp/MapHelp";
 import MapFilter from "./MapPageComponents/MapFilter/MapFilter";
 import MapDeliveries from "./MapPageComponents/MapDeliveries/MapDeliveries";
 import Deliveries from "./MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
-import BackButton from "../../Components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import QRScanner from "./MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
-import Splash from "../../Components/Splash/Splash";
+import Splash from "../../components/Splash/Splash";
 import { MapPageContext } from "../../context/MapPageContext";
 
 const MapPage = () => {
