@@ -8,14 +8,15 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/map">
-          <MapPageProvider>
-            <MapPage />
-          </MapPageProvider>
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route
+          path="/map"
+          element={
+            <MapPageProvider>
+              <MapPage />
+            </MapPageProvider>
+          }
+        ></Route>
+        <Route path="/" element={<Home />}></Route>
       </Routes>
     </Router>
   );

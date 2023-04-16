@@ -1,6 +1,6 @@
 import "./NavMenu.scss";
 import NavButton from "../../../../assets/icons/nav-button.svg";
-import { HashLink as Link } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 
 function NavMenu(props) {
   if (!props.navMenu) {
