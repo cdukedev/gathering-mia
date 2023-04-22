@@ -39,6 +39,15 @@
         width: 100vw;
         height: 14vw;
         padding-top: 4vw;
+        &:hover{
+            background-color: #ebffeb;
+            color: #e6410a;
+            font-size: x-large;
+            transition: all 0.5s ease;
+            //add textshadow
+            text-shadow: 3px 3px 10px 0 rgba(0,0,0,1);
+            box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
+        }
     }
 }
 }
