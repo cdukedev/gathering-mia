@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./MapPage.scss";
-import MapMenu from "./MapPageComponents/MapMenu/MapMenu";
-import Map from "./MapPageComponents/Map/Map";
-import MapHelp from "./MapPageComponents/MapHelp/MapHelp";
-import MapFilter from "./MapPageComponents/MapFilter/MapFilter";
-import MapDeliveries from "./MapPageComponents/MapDeliveries/MapDeliveries";
-import Deliveries from "./MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
+import MapMenu from "../../Components/MapPageComponents/MapMenu/MapMenu";
+import Map from "../../Components/MapPageComponents/Map/Map";
+import MapHelp from "../../Components/MapPageComponents/MapHelp/MapHelp";
+import MapFilter from "../../Components/MapPageComponents/MapFilter/MapFilter";
+import MapDeliveries from "../../Components/MapPageComponents/MapDeliveries/MapDeliveries";
+import Deliveries from "../../Components/MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
 import BackButton from "../../Components/BackButton/BackButton";
-import QRScanner from "./MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
+import QRScanner from "../../Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
 import Splash from "../../Components/Splash/Splash";
 import { MapPageContext } from "../../context/MapPageContext";
 
