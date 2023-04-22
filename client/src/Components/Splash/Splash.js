@@ -1,5 +1,5 @@
 import "./Splash.scss";
-import splash from "../../assets/images/splash.svg";
+import splashLogo from "../../assets/images/splash-logo.png";
 import { MapPageContext } from "../../context/MapPageContext";
 import { useContext } from "react";
 
@@ -12,7 +12,9 @@ function Splash() {
   };
   return (
     <section className="container">
-      <img className="splash" src={splash} alt="splash screen" />
+      <div className="splash">
+        <img className="splash-logo" src={splashLogo} alt="Gathering logo" />
+      </div>
       <div className="container">
         {!geolocationToggle ? (
           <button className="splash-button" onClick={handleClick}>
