@@ -7,9 +7,9 @@ import MapHelp from "./MapPageComponents/MapHelp/MapHelp";
 import MapFilter from "./MapPageComponents/MapFilter/MapFilter";
 import MapDeliveries from "./MapPageComponents/MapDeliveries/MapDeliveries";
 import Deliveries from "./MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
-import BackButton from "../../components/BackButton/BackButton";
+import BackButton from "../../Components/BackButton/BackButton";
 import QRScanner from "./MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
-import Splash from "../../components/Splash/Splash";
+import Splash from "../../Components/Splash/Splash";
 import { MapPageContext } from "../../context/MapPageContext";
 
 const MapPage = () => {
@@ -77,7 +77,7 @@ const MapPage = () => {
           )}
 
           {menu === "defaultMenu" && (
-            <div className="map-container">
+            <div className="map-container" data-testid="map-container">
               <Map height="calc(100vh - 50px)" />
               <MapMenu handleMenuClick={handleMenuClick} />
               <BackButton />

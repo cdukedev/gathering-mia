@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders App component correctly 1`] = `
+<div
+  className="desktop"
+>
+  <div
+    className="desktop-logo__container"
+  >
+    <img
+      alt="logo"
+      className="desktop-logo"
+      src=""
+    />
+  </div>
+  <div
+    className="desktop-content__container"
+  >
+    <p
+      className="desktop-content"
+    >
+      We are excited to have you join us! This site is intented for mobile use. Please scan the QR code to navigate to our site on your mobile device.
+    </p>
+    <div>
+      <img
+        alt="gathering website QR Code"
+        className="desktop-qr"
+        src=""
+      />
+    </div>
+    <span
+      className="desktop-content"
+    >
+      You may also type gathering-mia.live into your favorite mobile browser.
+    </span>
+  </div>
+</div>
+`;
