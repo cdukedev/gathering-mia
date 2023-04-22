@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "./MapPage.scss";
-import MapMenu from "../../Components/MapPageComponents/MapMenu/MapMenu";
-import Map from "../../Components/MapPageComponents/Map/Map";
-import MapHelp from "../../Components/MapPageComponents/MapHelp/MapHelp";
-import MapFilter from "../../Components/MapPageComponents/MapFilter/MapFilter";
-import MapDeliveries from "../../Components/MapPageComponents/MapDeliveries/MapDeliveries";
-import Deliveries from "../../Components/MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
-import BackButton from "../../Components/BackButton/BackButton";
-import QRScanner from "../../Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
+// ... other imports
+import MapDeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapDeliveriesWrapper/MapDeliveriesWrapper";
 import Splash from "../../Components/Splash/Splash";
+import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/DeliveriesWrapper/DeliveriesWrapper";
+import MapHelpWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapHelpWrapper/MapHelpWrapper";
+import DefaultMenuWrapper from "../../Components/MapPageComponents/MapPageWrappers/DefaultMenuWrapper/DefaultMenuWrapper";
+import MapFilterWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapFilterWrapper/MapFilterWrapper";
+import QrScanner from "../../Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
 import { MapPageContext } from "../../context/MapPageContext";
 
 const MapPage = () => {
@@ -27,71 +24,49 @@ const MapPage = () => {
   } = useContext(MapPageContext);
 
   return (
-    <React.Fragment>
+    <>
       {!coords && <Splash handleGeolocation={handleGeolocationRequest} />}
 
       {coords && (
         <div className="map-page">
           {menu === "mapDeliveries" && (
-            <div className="map-deliveries">
-              <Map height="calc(100vh - 280px)" />
-              <MapDeliveries
-                handleMenuClick={handleMenuClick}
-                handleDeliveryClick={handleDeliveryClick}
-                foodBanks={foodBanks}
-                coords={coords}
-              />
-              <BackButton />
-            </div>
+            <MapDeliveriesWrapper
+              handleMenuClick={handleMenuClick}
+              handleDeliveryClick={handleDeliveryClick}
+              foodBanks={foodBanks}
+              coords={coords}
+            />
           )}
 
           {menu === "deliveries" && (
-            <div className="deliveries">
-              <Deliveries
-                handleMenuClick={handleMenuClick}
-                handleDeliveryClick={handleDeliveryClick}
-              />
-            </div>
+            <DeliveriesWrapper
+              handleMenuClick={handleMenuClick}
+              handleDeliveryClick={handleDeliveryClick}
+            />
           )}
 
           {menu === "mapHelp" && (
-            <div className="map-help">
-              <Map height="calc(100vh - 135px)" />
-              <MapHelp handleMenuClick={handleMenuClick} />
-              <BackButton />
-            </div>
+            <MapHelpWrapper handleMenuClick={handleMenuClick} />
           )}
 
           {menu === "mapFilter" && (
-            <div className="map-filter">
-              <Map height="calc(100vh - 125px)" />
-              <MapFilter
-                handleCommunityGardenToggle={handleCommunityGardenToggle}
-                handleFoodBankToggle={handleFoodBankToggle}
-                handleMenuClick={handleMenuClick}
-                foodBankToggle={foodBankToggle}
-                communityGardenToggle={communityGardenToggle}
-              />
-              <BackButton />
-            </div>
+            <MapFilterWrapper
+              handleCommunityGardenToggle={handleCommunityGardenToggle}
+              handleFoodBankToggle={handleFoodBankToggle}
+              handleMenuClick={handleMenuClick}
+              foodBankToggle={foodBankToggle}
+              communityGardenToggle={communityGardenToggle}
+            />
           )}
 
           {menu === "defaultMenu" && (
-            <div className="map-container" data-testid="map-container">
-              <Map height="calc(100vh - 50px)" />
-              <MapMenu handleMenuClick={handleMenuClick} />
-              <BackButton />
-            </div>
+            <DefaultMenuWrapper handleMenuClick={handleMenuClick} />
           )}
 
-          {menu === "qrScanner" && (
-            <div className="QR-scanner">
-              <QRScanner />
-            </div>
-          )}
+          {menu === "qrScanner" && <QrScanner />}
         </div>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
