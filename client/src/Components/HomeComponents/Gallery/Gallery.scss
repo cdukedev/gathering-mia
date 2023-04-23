@@ -1,69 +1,51 @@
-.gallery{
+.gallery {
     display: flex;
     flex-wrap: wrap;
-    &__columns{
-        display: flex;
-        flex-direction: row;
-        width: 100vw;
-        justify-content: space-evenly;
-        margin: 5vw 0;
+  
+    &__columns {
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      justify-content: space-evenly;
+      margin: 5vw 0;
     }
-    &__column{
-        &-image{
-            border-radius: 15%;
-            width: 45vw;
-        }
-        &-one{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 45%;
-            margin: 0;
-            gap: 2vw;  
-        &--image{
-            &-9{
-                width: 94vw;
-                border-radius: 25px;
-                font-size: 2.25rem;
-                overflow: hidden;
-                perspective: 1px;
-                z-index: -1;
-            }
-            &-container{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-            }
-        }
-        &--text{
-            position: absolute;
-            text-align: center;
-            color: #DF8363;
-            font-size: 1.15rem;
-            font-weight: bold;
-            z-index: 0;
-            &-box{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
+  
+    &__column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 45%;
+      margin: 0;
+      gap: 2vw;
     }
-}
-    &__column-two{
-        display: flex;
-        flex-direction: column;
-        width: 45%;
-        margin: 0;
-        gap: 2vw;
-        &--image-container{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 100%;
+  
+    &__item {
+      position: relative;
+      display: flex;
+      justify-content: center;
+        align-items: center;
+      &-image {
+        border-radius: 15%;
+        width: 45vw;
+  
+        &-9 {
+          width: 94vw;
+          border-radius: 25px;
+          font-size: 2.25rem;
+          overflow: hidden;
+          perspective: 1px;
+          z-index: -1;
         }
+      }
+  
+      &-text {
+        position: absolute;
+        text-align: center;
+        color: #df8363;
+        font-size: 2rem;
+        font-weight: bold;
+        z-index: 0;
+      }
     }
-}
+  }
+  

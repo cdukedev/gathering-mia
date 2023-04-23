@@ -113,16 +113,15 @@ function Footer() {
             </span>
           </div>
         </div>
-        <div className="contact__content-3">
-          <span className="contact__content-bottom">
-            <Link to="/" className="contact__content-bottom--link">
-              GatheringMIA
-            </Link>
-          </span>
-        </div>
-        <div className="contact__content-7 contact__content-item--copyright">
-          <p>Copyright Gathering © 2023 All Rights Reserved</p>
-        </div>
+        <Link
+          to="/"
+          className="contact__content-3 contact__content-bottom contact__content-bottom--link"
+        >
+          GatheringMIA
+        </Link>
+        <p className="contact__content-7 contact__content-item--copyright">
+          Copyright Gathering © 2023 All Rights Reserved
+        </p>
       </div>
     </>
   );

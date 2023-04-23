@@ -1,9 +1,10 @@
 import "./AboutUs.scss";
+import React from "react";
 import AboutImage from "../../../assets/images/gallery/about.png";
 
 function AboutUs() {
   return (
-    <div id="AboutUs" className="about-us">
+    <div id="AboutUs" className="about-us" data-testid="about-us">
       <h1 className="about-us__title">Who We Are</h1>
       <img
         className="about-us__image"

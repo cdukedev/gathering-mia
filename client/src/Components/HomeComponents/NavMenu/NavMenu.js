@@ -1,13 +1,10 @@
 import "./NavMenu.scss";
 import NavButton from "../../../assets/icons/nav-button.svg";
-import { Link } from "react-router-dom";
-import { animateScroll as scroll } from "react-scroll";
+import { useHandleMenuItemClick } from "../../../hooks/useHandleMenuItemClick.js";
+import NavMenuItem from "./NavMenuItem";
 
 function NavMenu({ handleNavMenu, navMenu }) {
-  const scrollToElement = (hash) => {
-    scroll.scrollTo(document.getElementById(hash).offsetTop);
-    handleNavMenu();
-  };
+  const handleMenuItemClick = useHandleMenuItemClick(handleNavMenu);
 
   if (!navMenu) {
     return (
@@ -35,36 +32,28 @@ function NavMenu({ handleNavMenu, navMenu }) {
               />
             </div>
             <div className="nav-menu__items">
-              <Link className="nav-menu__item" to="/map">
-                DELIVER FOOD
-              </Link>
-              <Link className="nav-menu__item" to="/map">
-                FIND RESOURCES
-              </Link>
-              <Link
-                className="nav-menu__item"
-                onClick={() => scrollToElement("AboutUs")}
-              >
-                ABOUT US
-              </Link>
-              <Link
-                className="nav-menu__item"
-                onClick={() => scrollToElement("TakePart")}
-              >
-                GET INVOLVED
-              </Link>
-              <Link
-                className="nav-menu__item"
-                onClick={() => scrollToElement("NeedHelp")}
-              >
-                NEED FOOD ASSISTANCE?
-              </Link>
-              <Link
-                className="nav-menu__item"
-                onClick={() => scrollToElement("contact")}
-              >
-                CONTACT US
-              </Link>
+              <NavMenuItem label="DELIVER FOOD" to="/map" />
+              <NavMenuItem label="FIND RESOURCES" to="/map" />
+              <NavMenuItem
+                label="ABOUT US"
+                to="#"
+                handleClick={() => handleMenuItemClick("AboutUs")}
+              />
+              <NavMenuItem
+                label="GET INVOLVED"
+                to="#"
+                handleClick={() => handleMenuItemClick("TakePart")}
+              />
+              <NavMenuItem
+                label="NEED FOOD ASSISTANCE?"
+                to="#"
+                handleClick={() => handleMenuItemClick("NeedHelp")}
+              />
+              <NavMenuItem
+                label="CONTACT US"
+                to="#"
+                handleClick={() => handleMenuItemClick("contact")}
+              />
             </div>
           </div>
         </div>

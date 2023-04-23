@@ -1,6 +1,6 @@
+import React from "react";
 import Logo from "../../../assets/logo/desktop-logo.png";
 import QRCode from "../../../assets/icons/desktop_qr.png";
-import React from "react";
 
 import "./Desktop.scss";
 
@@ -12,7 +12,7 @@ function Desktop() {
       </div>
       <div className="desktop-content__container">
         <p className="desktop-content">
-          We are excited to have you join us! This site is intented for mobile
+          We are excited to have you join us! This site is intended for mobile
           use. Please scan the QR code to navigate to our site on your mobile
           device.
         </p>
