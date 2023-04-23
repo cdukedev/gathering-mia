@@ -24,7 +24,12 @@ const SocialLinks = ({ links }) => {
         const imageSource = getImageSource(src);
 
         return (
-          <a key={alt} className="contact__social-link" href={href}>
+          <a
+            key={alt}
+            className="contact__social-link"
+            href={href}
+            data-testid={`social-link-${src}`}
+          >
             <img
               className="contact__social-link-image"
               src={imageSource}

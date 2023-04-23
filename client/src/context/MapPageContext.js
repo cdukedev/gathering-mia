@@ -67,7 +67,7 @@ const MapPageProvider = ({ children }) => {
     handleFoodBankToggle,
     handleCommunityGardenToggle,
     handleGeolocationRequest,
-    setGeolocationToggle
+    setGeolocationToggle,
   };
 
   return (
