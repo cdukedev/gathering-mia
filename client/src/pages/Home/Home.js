@@ -1,10 +1,10 @@
+import React from "react";
 import "./Home.scss";
 import NavMenu from "../../Components/HomeComponents/NavMenu/NavMenu";
 import Footer from "../../Components/HomeComponents/Footer/Footer";
 import Gallery from "../../Components/HomeComponents/Gallery/Gallery";
 import AboutUs from "../../Components/HomeComponents/AboutUs/AboutUs";
 import Logo from "../../assets/logo/logo.svg";
-import React from "react";
 import TakePart from "../../Components/HomeComponents/TakePart/TakePart";
 import NeedHelp from "../../Components/HomeComponents/NeedHelp/NeedHelp";
 import Desktop from "../../Components/HomeComponents/Desktop/Desktop";

@@ -1,3 +1,4 @@
+import React from "react";
 import "./MapMenu.scss";
 import homeButton from "../../../assets/icons/map-home.svg";
 import helpButton from "../../../assets/icons/map-help.svg";

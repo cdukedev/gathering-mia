@@ -1,8 +1,8 @@
+import React from "react";
 import "./MapHelp.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
 import FoodBank from "../../../assets/icons/foodbank.svg";
 import CommunityGarden from "../../../assets/icons/community-garden.svg";
-import Home from "../../../assets/icons/home.svg";
 function MapHelp(props) {
   return (
     <div className="map-help__container">

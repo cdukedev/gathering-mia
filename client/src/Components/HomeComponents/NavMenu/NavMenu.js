@@ -1,3 +1,4 @@
+import React from "react";
 import "./NavMenu.scss";
 import NavButton from "../../../assets/icons/nav-button.svg";
 import { useHandleMenuItemClick } from "../../../hooks/useHandleMenuItemClick.js";

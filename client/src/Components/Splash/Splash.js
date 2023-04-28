@@ -1,3 +1,4 @@
+import React from "react";
 import "./Splash.scss";
 import splashLogo from "../../assets/images/splash-logo.png";
 import { MapPageContext } from "../../context/MapPageContext";

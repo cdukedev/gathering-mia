@@ -1,3 +1,4 @@
+import React from "react";
 import "./TakePart.scss";
 import DeliveryImage from "../../../assets/images/deliver.png";
 

@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import React, { createContext, useState, useCallback } from "react";
 import foodBanks from "../data/foodBanks.json";
 import communityGardens from "../data/communityGardens.json";
 import initialMarkers from "../data/initialMarkers.json";

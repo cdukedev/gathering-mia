@@ -1,4 +1,5 @@
 import backButton from "../../assets/icons/map-back-button.svg";
+import React from "react";
 import "./BackButton.scss";
 import { Link } from "react-router-dom";
 

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-// ... other imports
 import MapDeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapDeliveriesWrapper/MapDeliveriesWrapper";
 import Splash from "../../Components/Splash/Splash";
 import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/DeliveriesWrapper/DeliveriesWrapper";
