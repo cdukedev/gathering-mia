@@ -1,98 +1,58 @@
-import React, { useState, useContext } from "react";
-import { MapPageContext } from "../../../context/MapPageContext";
-import {
-  GoogleMap,
-  InfoWindow,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
-import foodBank from "../../../assets/icons/foodbank.svg";
-import communityGarden from "../../../assets/icons/community-garden.svg";
-import initialMarkersJson from "../../../data/initialMarkers.json"; // Import initialMarkersJson
+import React, { useEffect, useRef } from "react";
+import "./Map.scss";
+import DirectionsRenderer from "./DirectionsRenderer/DirectionsRenderer";
 
-const Map = (props) => {
-  const { foodBankToggle, communityGardenToggle, coords } =
-    useContext(MapPageContext); // Add initialMarkers and coords here
-  const [activeInfoWindow, setActiveInfoWindow] = useState("");
-  const [center] = useState(
-    coords
-      ? {
-          lat: coords.lat,
-          lng: coords.lng,
-        }
-      : null
-  );
-  const initialMarkers = [...initialMarkersJson]; // Add this line to create a copy of initialMarkersJson
-  const [markers] = useState(initialMarkers);
+const Map = ({ height, coords, destination }) => {
+  const mapRef = useRef();
+  useEffect(() => {
+    if (document.querySelector("#google-maps-script")) return;
+    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-  const containerStyle = {
-    width: "100vw",
-    height: `${props.height}`,
-  };
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
+    script.async = true;
+    document.body.appendChild(script);
 
-  const createMapOptions = {
-    zoomControl: false,
-    mapTypeControl: false,
-    scaleControl: false,
-    streetViewControl: false,
-    rotateControl: false,
-    fullscreenControl: false,
-  };
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+  useEffect(() => {
+    if (!window.google || !window.google.maps) return;
+    const loadMap = () => {
+      if (!mapRef.current) return;
 
-  const markerClicked = (index) => {
-    setActiveInfoWindow(index);
-  };
+      new window.google.maps.Map(mapRef.current, {
+        center: coords || { lat: 41.850033, lng: -87.6500523 },
+        zoom: 8,
+      });
+    };
 
+    if (window.google && window.google.maps) {
+      loadMap();
+    } else {
+      document.addEventListener("google-maps-script-loaded", loadMap);
+    }
+
+    return () => {
+      document.removeEventListener("google-maps-script-loaded", loadMap);
+      mapRef.current = null;
+    };
+  }, [coords]);
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
-      {center && (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          options={createMapOptions}
-          center={center}
-          zoom={13}
-        >
-          {markers.map((marker, index) => (
-            <Marker
-              key={index}
-              // position will be displayed if the filter toggle is true
-              position={
-                marker.type === "Food Bank" && foodBankToggle
-                  ? marker.position
-                  : marker.type === "Community Garden" && communityGardenToggle
-                  ? marker.position
-                  : null
-              }
-              //set icon to foodbank image if name is foodbank
-              // else set icon to home image if name is home
-              // else set icon to community garden image if name is community garden
-              icon={
-                marker.type === "Food Bank"
-                  ? foodBank
-                  : marker.type === "Community Garden"
-                  ? communityGarden
-                  : null
-              }
-              onClick={() => markerClicked(index)}
-            >
-              {activeInfoWindow === index && (
-                <InfoWindow position={marker.position}>
-                  <b>
-                    {marker.name}
-                    <br />
-                    {marker.address}
-                    <br />
-                    {marker.phone}
-                    <br />
-                    {marker.type}
-                  </b>
-                </InfoWindow>
-              )}
-            </Marker>
-          ))}
-        </GoogleMap>
+    <div
+      ref={mapRef}
+      className="map"
+      style={{ width: "100%", height: height || "100vh" }}
+    >
+      {mapRef.current && destination && (
+        <DirectionsRenderer
+          map={mapRef.current}
+          origin={coords}
+          destination={destination}
+        />
       )}
-    </LoadScript>
+    </div>
   );
 };
 

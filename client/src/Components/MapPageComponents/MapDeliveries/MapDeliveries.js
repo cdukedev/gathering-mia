@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./MapDeliveries.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
 import { MapPageContext } from "../../../context/MapPageContext";
+import Map from "../Map/Map";
+import QrScanner from "../MapDeliveryComponents/QRScanner/QRScanner";
 
 function MapDeliveries() {
   const { coords, foodBanks, handleMenuClick, handleDeliveryClick } =
     useContext(MapPageContext);
+
+  const [selectedFoodBank, setSelectedFoodBank] = useState(null);
+  const [showQRScanner, setShowQRScanner] = useState(false);
 
   const calculateDistance = (centerLocation, foodBank) => {
     const { lat, lng } = centerLocation;
@@ -79,21 +84,23 @@ function MapDeliveries() {
                       : "Loading..."}
                   </div>
                   <div>
-                    <a
+                    <button
                       className="map-deliveries__top-row--food-bank-right--directions"
                       onClick={() => {
-                        alert(
-                          "Directions are being opened in a new page, you will need to return to this page once you have arrived at the food bank"
-                        );
-                        handleDeliveryClick("qrScanner", foodBank.zone);
+                        setSelectedFoodBank(foodBank);
                       }}
-                      zone={foodBank.zone}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${foodBank.position.lat},${foodBank.position.lng}`}
                     >
                       Get Directions
-                    </a>
+                    </button>
+                    <button
+                      className="map-deliveries__top-row--food-bank-right--arrived"
+                      onClick={() => {
+                        handleDeliveryClick("qrScanner", foodBank.zone);
+                        setShowQRScanner(true);
+                      }}
+                    >
+                      Arrived at Food Bank
+                    </button>
                   </div>
                 </div>
               </div>
@@ -101,6 +108,7 @@ function MapDeliveries() {
           );
         })}
       </div>
+      {showQRScanner && <QrScanner />}
     </div>
   );
 }
