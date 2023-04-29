@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Splash.scss";
 import splashLogo from "../../assets/images/splash-logo.png";
-import { MapPageContext } from "../../context/MapPageContext";
-import { useContext } from "react";
+import { GeolocationContext } from "../../contexts/GeolocationContext";
 
 function Splash() {
   const { geolocationToggle, setGeolocationToggle, handleGeolocationRequest } =
-    useContext(MapPageContext);
+    useContext(GeolocationContext);
   const handleClick = () => {
     setGeolocationToggle(true);
     handleGeolocationRequest();

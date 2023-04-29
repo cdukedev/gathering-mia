@@ -35,18 +35,6 @@
       "react-app/jest"
     ]
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest",
-      "^.+\\.svg$": "jest-transform-stub",
-      "^.+\\.png$": "jest-transform-stub",
-      "^.+\\.jpg$": "jest-transform-stub"
-    },
-    "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -67,6 +55,7 @@
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.5.0",
     "cypress": "^10.6.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "jest-transform-stub": "^2.0.0"
   }

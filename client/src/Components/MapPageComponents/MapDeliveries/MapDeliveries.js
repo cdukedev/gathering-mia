@@ -1,12 +1,18 @@
 import React, { useContext } from "react";
 import "./MapDeliveries.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
-import { MapPageContext } from "../../../context/MapPageContext";
+import { MapPageContext } from "../../../contexts/MapPageContext";
+import { GeolocationContext } from "../../../contexts/GeolocationContext";
+import { RecipientContext } from "../../../contexts/RecipientContext";
+import { FoodBankContext } from "../../../contexts/FoodBankContext";
+import { useNavigate } from "react-router-dom";
 
 function MapDeliveries() {
-  const { coords, foodBanks, handleMenuClick, handleDeliveryClick } =
-    useContext(MapPageContext);
-
+  const { handleMenuClick } = useContext(MapPageContext);
+  const { coords } = useContext(GeolocationContext); // Consume GeolocationContext
+  const { foodBanks } = useContext(FoodBankContext); // Consume FoodBankContext
+  const { handleDeliveryClick } = useContext(RecipientContext);
+  const navigate = useNavigate();
   const calculateDistance = (centerLocation, foodBank) => {
     const { lat, lng } = centerLocation;
     const { lat: foodBankLat, lng: foodBankLng } = foodBank;
@@ -15,7 +21,6 @@ function MapDeliveries() {
     );
     return { distance };
   };
-
   foodBanks.map((foodBank) => {
     if (coords) {
       let distance = calculateDistance(coords, foodBank.position);
@@ -79,21 +84,18 @@ function MapDeliveries() {
                       : "Loading..."}
                   </div>
                   <div>
-                    <a
+                    <button
                       className="map-deliveries__top-row--food-bank-right--directions"
                       onClick={() => {
-                        alert(
-                          "Directions are being opened in a new page, you will need to return to this page once you have arrived at the food bank"
-                        );
                         handleDeliveryClick("qrScanner", foodBank.zone);
+                        navigate(
+                          `/directions/${coords.lat}/${coords.lng}/${foodBank.position.lat}/${foodBank.position.lng}`
+                        );
                       }}
                       zone={foodBank.zone}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${foodBank.position.lat},${foodBank.position.lng}`}
                     >
                       Get Directions
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

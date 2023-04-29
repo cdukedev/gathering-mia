@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./MapFilter.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
 import FilterOn from "../../../assets/icons/filter-on.svg";
 import FilterOff from "../../../assets/icons/filter-off.svg";
-function MapFilter(props) {
+import { MapPageContext } from "../../../contexts/MapPageContext";
+import { CommunityGardenContext } from "../../../contexts/CommunityGardenContext";
+import { FoodBankContext } from "../../../contexts/FoodBankContext";
+
+function MapFilter() {
+  const { menu, handleMenuClick } = useContext(MapPageContext);
+  const { communityGardenToggle, handleCommunityGardenToggle } = useContext(
+    CommunityGardenContext
+  );
+  const { foodBankToggle, handleFoodBankToggle } = useContext(FoodBankContext);
+
   return (
     <div className="map-filter__container">
       <div className="map-filter__text">
@@ -11,7 +21,7 @@ function MapFilter(props) {
           <img
             className="map-filter__top-row--arrow"
             onClick={() => {
-              props.handleMenuClick("defaultMenu");
+              handleMenuClick("defaultMenu");
             }}
             src={MapMenuArrow}
             alt="menu arrow to close helper"
@@ -20,12 +30,12 @@ function MapFilter(props) {
         <div className="map-filter__bottom-container">
           <div
             className={
-              props.foodBankToggle
+              foodBankToggle
                 ? "map-filter__bottom-container--items"
                 : "map-filter__bottom-container--items map-filter__bottom-container--items-off"
             }
             onClick={() => {
-              props.handleFoodBankToggle();
+              handleFoodBankToggle();
             }}
           >
             <span className="map-filter__bottom-container--item-text">
@@ -33,18 +43,18 @@ function MapFilter(props) {
             </span>
             <img
               className="map-filter__bottom-container--item"
-              src={props.foodBankToggle ? FilterOn : FilterOff}
+              src={foodBankToggle ? FilterOn : FilterOff}
               alt="FoodBank Icon"
             />
           </div>
           <div
             className={
-              props.communityGardenToggle
+              communityGardenToggle
                 ? "map-filter__bottom-container--items"
                 : "map-filter__bottom-container--items map-filter__bottom-container--items-off"
             }
             onClick={() => {
-              props.handleCommunityGardenToggle();
+              handleCommunityGardenToggle();
             }}
           >
             <span className="map-filter__bottom-container--item-text">
@@ -52,7 +62,7 @@ function MapFilter(props) {
             </span>
             <img
               className="map-filter__bottom-container--item"
-              src={props.communityGardenToggle ? FilterOn : FilterOff}
+              src={communityGardenToggle ? FilterOn : FilterOff}
               alt="CommunityGarden Icon"
             />
           </div>
@@ -61,4 +71,5 @@ function MapFilter(props) {
     </div>
   );
 }
+
 export default MapFilter;

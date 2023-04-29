@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./Deliveries.scss";
-import { MapPageContext } from "../../../../context/MapPageContext";
+import { MapPageContext } from "../../../../contexts/MapPageContext";
 
 function Deliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);

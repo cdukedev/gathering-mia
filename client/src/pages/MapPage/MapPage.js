@@ -6,21 +6,23 @@ import MapHelpWrapper from "../../Components/MapPageComponents/MapPageWrappers/M
 import DefaultMenuWrapper from "../../Components/MapPageComponents/MapPageWrappers/DefaultMenuWrapper/DefaultMenuWrapper";
 import MapFilterWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapFilterWrapper/MapFilterWrapper";
 import QrScanner from "../../Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
-import { MapPageContext } from "../../context/MapPageContext";
+import { MapPageContext } from "../../contexts/MapPageContext";
+import { GeolocationContext } from "../../contexts/GeolocationContext";
+import { FoodBankContext } from "../../contexts/FoodBankContext";
+import { CommunityGardenContext } from "../../contexts/CommunityGardenContext";
 
 const MapPage = () => {
-  const {
-    menu,
-    coords,
-    foodBanks,
-    foodBankToggle,
-    communityGardenToggle,
-    handleMenuClick,
-    handleDeliveryClick,
-    handleFoodBankToggle,
-    handleCommunityGardenToggle,
-    handleGeolocationRequest,
-  } = useContext(MapPageContext);
+  const { menu, handleMenuClick, handleDeliveryClick } =
+    useContext(MapPageContext);
+
+  const { coords, handleGeolocationRequest } = useContext(GeolocationContext);
+
+  const { foodBanks, foodBankToggle, handleFoodBankToggle } =
+    useContext(FoodBankContext);
+
+  const { communityGardenToggle, handleCommunityGardenToggle } = useContext(
+    CommunityGardenContext
+  );
 
   return (
     <>

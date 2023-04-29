@@ -1,5 +1,8 @@
-import React, { useState, useContext } from "react";
-import { MapPageContext } from "../../../context/MapPageContext";
+import React, { useState, useContext, useCallback, useMemo } from "react";
+import { MapPageContext } from "../../../contexts/MapPageContext";
+import { GeolocationContext } from "../../../contexts/GeolocationContext"; // Import GeolocationContext
+import { FoodBankContext } from "../../../contexts/FoodBankContext";
+import { CommunityGardenContext } from "../../../contexts/CommunityGardenContext";
 import {
   GoogleMap,
   InfoWindow,
@@ -8,11 +11,13 @@ import {
 } from "@react-google-maps/api";
 import foodBank from "../../../assets/icons/foodbank.svg";
 import communityGarden from "../../../assets/icons/community-garden.svg";
-import initialMarkersJson from "../../../data/initialMarkers.json"; // Import initialMarkersJson
 
-const Map = (props) => {
-  const { foodBankToggle, communityGardenToggle, coords } =
-    useContext(MapPageContext); // Add initialMarkers and coords here
+const Map = ({ height, zoom }) => {
+  const { foodBanks, foodBankToggle } = useContext(FoodBankContext);
+  const { communityGardens, communityGardenToggle } = useContext(
+    CommunityGardenContext
+  );
+  const { coords } = useContext(GeolocationContext); // Get coords from GeolocationContext
   const [activeInfoWindow, setActiveInfoWindow] = useState("");
   const [center] = useState(
     coords
@@ -22,12 +27,14 @@ const Map = (props) => {
         }
       : null
   );
-  const initialMarkers = [...initialMarkersJson]; // Add this line to create a copy of initialMarkersJson
-  const [markers] = useState(initialMarkers);
 
+  const markers = useMemo(
+    () => [...foodBanks, ...communityGardens],
+    [foodBanks, communityGardens]
+  );
   const containerStyle = {
     width: "100vw",
-    height: `${props.height}`,
+    height: `${height}`,
   };
 
   const createMapOptions = {
@@ -39,22 +46,24 @@ const Map = (props) => {
     fullscreenControl: false,
   };
 
-  const markerClicked = (index) => {
+  const markerClicked = useCallback((index) => {
     setActiveInfoWindow(index);
-  };
+  }, []);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
       {center && (
         <GoogleMap
+          data-testid="google-map"
           mapContainerStyle={containerStyle}
           options={createMapOptions}
           center={center}
-          zoom={13}
+          zoom={zoom || 13}
         >
           {markers.map((marker, index) => (
             <Marker
               key={index}
+              data-testid={`marker-${index}`}
               // position will be displayed if the filter toggle is true
               position={
                 marker.type === "Food Bank" && foodBankToggle
@@ -78,13 +87,21 @@ const Map = (props) => {
               {activeInfoWindow === index && (
                 <InfoWindow position={marker.position}>
                   <b>
-                    {marker.name}
+                    <span data-testid={`info-window-name-${index}`}>
+                      {marker.name}
+                    </span>
                     <br />
-                    {marker.address}
+                    <span data-testid={`info-window-address-${index}`}>
+                      {marker.address}
+                    </span>
                     <br />
-                    {marker.phone}
+                    <span data-testid={`info-window-phone-${index}`}>
+                      {marker.phone}
+                    </span>
                     <br />
-                    {marker.type}
+                    <span data-testid={`info-window-type-${index}`}>
+                      {marker.type}
+                    </span>
                   </b>
                 </InfoWindow>
               )}
