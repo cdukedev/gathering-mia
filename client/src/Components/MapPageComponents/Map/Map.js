@@ -44,7 +44,7 @@ const Map = (props) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
       {center && (
         <GoogleMap
           mapContainerStyle={containerStyle}
