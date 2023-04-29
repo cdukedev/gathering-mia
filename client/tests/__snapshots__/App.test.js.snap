@@ -10,7 +10,7 @@ exports[`renders App component correctly 1`] = `
     <img
       alt="logo"
       className="desktop-logo"
-      src=""
+      src="test-file-stub"
     />
   </div>
   <div
@@ -25,7 +25,7 @@ exports[`renders App component correctly 1`] = `
       <img
         alt="gathering website QR Code"
         className="desktop-qr"
-        src=""
+        src="test-file-stub"
       />
     </div>
     <span
