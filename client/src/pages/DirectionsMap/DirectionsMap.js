@@ -165,8 +165,6 @@ const DirectionsMap = () => {
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
-        zoom={14}
         options={mapOptions}
         onLoad={handleMapLoad}
       >
