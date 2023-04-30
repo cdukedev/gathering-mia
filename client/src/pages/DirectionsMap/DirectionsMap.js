@@ -21,11 +21,30 @@ const DirectionsMap = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    return () => {
-      if (watchId) {
-        navigator.geolocation.clearWatch(watchId);
-      }
-    };
+    if (mapRef.current && !directions) {
+      const request = {
+        origin: center,
+        destination: {
+          lat: parseFloat(foodBankLat),
+          lng: parseFloat(foodBankLng),
+        },
+        travelMode: "DRIVING",
+      };
+      new window.google.maps.DirectionsService().route(
+        request,
+        directionsCallback
+      );
+    }
+  }, [directions, center, foodBankLat, foodBankLng]);
+  useEffect(() => {
+    if (mapRef.current && !watchId) {
+      const id = navigator.geolocation.watchPosition(
+        handleGeolocationUpdate,
+        (error) => console.error(error),
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+      );
+      setWatchId(id);
+    }
   }, [watchId]);
 
   const containerStyle = {
