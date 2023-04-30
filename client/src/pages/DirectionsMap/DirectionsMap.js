@@ -17,6 +17,7 @@ const DirectionsMap = () => {
   const [userPosition, setUserPosition] = useState(center);
   const [carMarker, setCarMarker] = useState(null);
   const [watchId, setWatchId] = useState(null);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -39,8 +40,25 @@ const DirectionsMap = () => {
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: false,
+    mapTypeId: "roadmap", // Use the hybrid map type for more detailed visuals
   };
 
+  const haversineDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c; // Distance in kilometers
+    return d;
+  };
   const updateCarMarker = (position) => {
     if (carMarker) {
       carMarker.setPosition(position);
@@ -60,20 +78,45 @@ const DirectionsMap = () => {
       lng: position.coords.longitude,
     };
     updateCarMarker(newPosition);
+
+    if (
+      directions &&
+      currentStepIndex < directions.routes[0].legs[0].steps.length
+    ) {
+      const nextStep = directions.routes[0].legs[0].steps[currentStepIndex];
+      const distanceToNextStep = haversineDistance(
+        newPosition.lat,
+        newPosition.lng,
+        nextStep.start_location.lat(),
+        nextStep.start_location.lng()
+      );
+
+      if (distanceToNextStep < 0.05) {
+        // 0.05 km = 50 meters
+        speakDirections(nextStep.instructions);
+        setCurrentStepIndex(currentStepIndex + 1);
+      }
+    }
   };
+
   const speakDirections = (text) => {
+    const cleanText = text.replace(/<[^>]*>?/gm, ""); // Remove any HTML tags
     const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(text);
+    console.log("Speaking direction:", cleanText); // Log the spoken direction
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     synth.speak(utterance);
   };
 
   const directionsCallback = (response, status) => {
     if (status === "OK") {
       setDirections(response);
-      const steps = response.routes[0].legs[0].steps;
-      steps.forEach((step) => {
-        speakDirections(step.instructions);
-      });
+      // Speak the first direction upon load
+      if (response.routes[0].legs[0].steps.length > 0) {
+        const firstStep = response.routes[0].legs[0].steps[0].instructions;
+        speakDirections(
+          `We greatly appreciate your time to deliver today. Allow me to help you find your way. ${firstStep}`
+        );
+      }
     } else {
       console.error(`Error fetching directions: ${status}`);
       setError(`Error fetching directions: ${status}`);
@@ -105,6 +148,9 @@ const DirectionsMap = () => {
       );
       setWatchId(id);
     }
+
+    // Increase the zoom level
+    map.setZoom(18);
   };
 
   if (!userLat || !userLng || !foodBankLat || !foodBankLng) {
