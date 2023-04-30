@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./DirectionsMap.scss";
 import { useParams } from "react-router-dom";
 import {
   GoogleMap,
@@ -14,11 +15,21 @@ const DirectionsMap = () => {
   };
   const [directions, setDirections] = useState(null);
   const [error, setError] = useState(null);
+  const [zoom, setZoom] = useState(14);
+  const [tilt, setTilt] = useState(0);
   const [userPosition, setUserPosition] = useState(center);
   const [carMarker, setCarMarker] = useState(null);
   const [watchId, setWatchId] = useState(null);
+  const [isFirstPersonView, setIsFirstPersonView] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const mapRef = useRef(null);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.setZoom(zoom);
+      mapRef.current.setTilt(tilt);
+    }
+  }, [zoom, tilt]);
 
   useEffect(() => {
     return () => {
@@ -27,6 +38,27 @@ const DirectionsMap = () => {
       }
     };
   }, [watchId]);
+  const toggleFirstPersonView = () => {
+    setIsFirstPersonView((prevIsFirstPersonView) => {
+      if (prevIsFirstPersonView) {
+        setZoom(14);
+        setTilt(0);
+      } else {
+        setZoom(18);
+        setTilt(45);
+        // Force an update of the map center
+        if (mapRef.current && userPosition) {
+          console.log("Forcing map center update:", userPosition);
+          mapRef.current.setCenter(userPosition);
+          if (mapRef.current.__gm) {
+            console.log("Triggering resize event");
+            window.google.maps.event.trigger(mapRef.current, "resize");
+          }
+        }
+      }
+      return !prevIsFirstPersonView;
+    });
+  };
 
   const containerStyle = {
     width: "100%",
@@ -79,6 +111,14 @@ const DirectionsMap = () => {
     };
     updateCarMarker(newPosition);
 
+    if (isFirstPersonView) {
+      console.log("Setting map center to:", newPosition);
+      mapRef.current.setCenter(newPosition);
+
+      if (position.coords.heading !== null) {
+        mapRef.current.setHeading(position.coords.heading);
+      }
+    }
     if (
       directions &&
       currentStepIndex < directions.routes[0].legs[0].steps.length
@@ -124,6 +164,7 @@ const DirectionsMap = () => {
   };
 
   const handleMapLoad = (map) => {
+    console.log("Map object:", map);
     mapRef.current = map;
     if (!directions) {
       const request = {
@@ -142,15 +183,15 @@ const DirectionsMap = () => {
 
     if (!watchId) {
       const id = navigator.geolocation.watchPosition(
-        handleGeolocationUpdate,
+        (position) => {
+          console.log("Geolocation updated:", position);
+          handleGeolocationUpdate(position);
+        },
         (error) => console.error(error),
         { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
       );
       setWatchId(id);
     }
-
-    // Increase the zoom level
-    map.setZoom(18);
   };
 
   if (!userLat || !userLng || !foodBankLat || !foodBankLng) {
@@ -162,23 +203,28 @@ const DirectionsMap = () => {
   }
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={14}
-        options={mapOptions}
-        onLoad={handleMapLoad}
-      >
-        {directions && (
-          <DirectionsRenderer
-            options={{
-              directions,
-            }}
-          />
-        )}
-      </GoogleMap>
-    </LoadScript>
+    <>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          options={mapOptions}
+          zoom={zoom}
+          onLoad={handleMapLoad}
+        >
+          {directions && (
+            <DirectionsRenderer
+              options={{
+                directions,
+              }}
+            />
+          )}
+        </GoogleMap>
+      </LoadScript>
+      <button className="lets-go-button" onClick={toggleFirstPersonView}>
+        Let's Go!
+      </button>
+    </>
   );
 };
 
