@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./DirectionsMap.scss";
 import { useParams } from "react-router-dom";
 import {
   GoogleMap,
@@ -18,6 +19,9 @@ const DirectionsMap = () => {
   const [carMarker, setCarMarker] = useState(null);
   const [watchId, setWatchId] = useState(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [directionText, setDirectionText] = useState("");
+  const [timeoutId, setTimeoutId] = useState(null);
+
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -124,23 +128,80 @@ const DirectionsMap = () => {
     console.log("Speaking direction:", cleanText); // Log the spoken direction
     const utterance = new SpeechSynthesisUtterance(cleanText);
     synth.speak(utterance);
+
+    // Set the direction text and remove it after 8 seconds
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    setDirectionText(cleanText);
+    const id = setTimeout(() => {
+      setDirectionText("");
+    }, 8000);
+    setTimeoutId(id);
   };
 
   const directionsCallback = (response, status) => {
     if (status === "OK") {
       setDirections(response);
-      // Speak the first direction upon load
+      // Set and display the first direction upon load
       if (response.routes[0].legs[0].steps.length > 0) {
         const firstStep = response.routes[0].legs[0].steps[0].instructions;
-        speakDirections(
-          `We greatly appreciate your time to deliver today. Allow me to help you find your way. ${firstStep}`
-        );
+        const rawInitialMessage = `We greatly appreciate your time to deliver today. Allow me to help you find your way. ${firstStep}`;
+
+        // Clean any HTML tags in the initial message
+        const initialMessage = rawInitialMessage.replace(/<[^>]*>?/gm, "");
+
+        // Set the initial direction text and remove it after 8 seconds
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        setDirectionText(initialMessage);
+        const id = setTimeout(() => {
+          setDirectionText("");
+        }, 8000);
+        setTimeoutId(id);
+
+        // Speak the initial message
+        speakDirections(initialMessage);
       }
     } else {
       console.error(`Error fetching directions: ${status}`);
       setError(`Error fetching directions: ${status}`);
     }
   };
+
+  // To only speak the first time this one may work better.
+  // const directionsCallback = (response, status) => {
+  //   if (status === "OK") {
+  //     setDirections(response);
+  //     // Set and display the first direction upon load
+  //     if (response.routes[0].legs[0].steps.length > 0) {
+  //       const firstStep = response.routes[0].legs[0].steps[0].instructions;
+  //       const rawInitialMessage = `We greatly appreciate your time to deliver today. Allow me to help you find your way. ${firstStep}`;
+
+  //       // Clean any HTML tags in the initial message
+  //       const initialMessage = rawInitialMessage.replace(/<[^>]*>?/gm, "");
+
+  //       // Set the initial direction text and remove it after 8 seconds
+  //       if (timeoutId) {
+  //         clearTimeout(timeoutId);
+  //       }
+  //       setDirectionText(initialMessage);
+  //       const id = setTimeout(() => {
+  //         setDirectionText("");
+  //       }, 8000);
+  //       setTimeoutId(id);
+
+  //       // Speak the initial message if the synth is not already speaking
+  //       if (!window.speechSynthesis.speaking) {
+  //         speakDirections(initialMessage);
+  //       }
+  //     }
+  //   } else {
+  //     console.error(`Error fetching directions: ${status}`);
+  //     setError(`Error fetching directions: ${status}`);
+  //   }
+  // };
 
   const handleMapLoad = (map) => {
     mapRef.current = map;
@@ -195,6 +256,11 @@ const DirectionsMap = () => {
           />
         )}
       </GoogleMap>
+      {directionText && (
+        <div className={`direction-box ${!directionText ? "fadeOut" : ""}`}>
+          {directionText}
+        </div>
+      )}
     </LoadScript>
   );
 };
