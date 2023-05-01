@@ -40,6 +40,7 @@ const DirectionsMap = () => {
       );
     }
   }, [directions, center, foodBankLat, foodBankLng]);
+
   useEffect(() => {
     if (mapRef.current && !watchId) {
       const id = navigator.geolocation.watchPosition(
@@ -100,49 +101,65 @@ const DirectionsMap = () => {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     };
+    console.log("New position:", newPosition); // Log the new position
     updateCarMarker(newPosition);
 
-    if (
-      directions &&
-      currentStepIndex < directions.routes[0].legs[0].steps.length
-    ) {
-      const nextStep = directions.routes[0].legs[0].steps[currentStepIndex];
-      const distanceToNextStep = haversineDistance(
-        newPosition.lat,
-        newPosition.lng,
-        nextStep.start_location.lat(),
-        nextStep.start_location.lng()
-      );
+    if (directions) {
+      console.log(directions.routes[0].legs[0].steps.length);
 
-      if (distanceToNextStep < 0.05) {
-        // 0.05 km = 50 meters
-        speakDirections(nextStep.instructions);
-        setCurrentStepIndex(currentStepIndex + 1);
+      if (currentStepIndex < directions.routes[0].legs[0].steps.length) {
+        const nextStep = directions.routes[0].legs[0].steps[currentStepIndex];
+        const distanceToNextStep = haversineDistance(
+          newPosition.lat,
+          newPosition.lng,
+          nextStep.start_location.lat(),
+          nextStep.start_location.lng()
+        );
+        console.log(
+          "Next step start location:",
+          nextStep.start_location.toJSON()
+        ); // Log the next step start location
+        console.log("Distance to next step:", distanceToNextStep); // Log the distance to the next step
+
+        if (distanceToNextStep < 0.05) {
+          // 0.05 km = 50 meters
+          speakDirections(nextStep.instructions);
+          setCurrentStepIndex(currentStepIndex + 1);
+        }
       }
     }
   };
 
   const speakDirections = (text) => {
-    const cleanText = text.replace(/<[^>]*>?/gm, ""); // Remove any HTML tags
-    const synth = window.speechSynthesis;
-    console.log("Speaking direction:", cleanText); // Log the spoken direction
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    synth.speak(utterance);
+    if ("speechSynthesis" in window) {
+      const cleanText = text.replace(/<[^>]*>?/gm, ""); // Remove any HTML tags
+      const synth = window.speechSynthesis;
+      console.log("Speaking direction:", cleanText); // Log the spoken direction
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      synth.speak(utterance);
 
-    // Set the direction text and remove it after 8 seconds
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+      // Set the direction text and remove it after 8 seconds
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      setDirectionText(cleanText);
+      const id = setTimeout(() => {
+        setDirectionText("");
+      }, 8000);
+      setTimeoutId(id);
+    } else {
+      console.error(
+        "Text-to-speech is not supported in this browser or device"
+      );
     }
-    setDirectionText(cleanText);
-    const id = setTimeout(() => {
-      setDirectionText("");
-    }, 8000);
-    setTimeoutId(id);
   };
 
   const directionsCallback = (response, status) => {
     if (status === "OK") {
       setDirections(response);
+      if (directions) {
+        console.log(directions.routes[0].legs[0].steps.length);
+      }
       // Set and display the first direction upon load
       if (response.routes[0].legs[0].steps.length > 0) {
         const firstStep = response.routes[0].legs[0].steps[0].instructions;
