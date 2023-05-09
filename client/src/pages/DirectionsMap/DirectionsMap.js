@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./DirectionsMap.scss";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   GoogleMap,
   LoadScript,
@@ -61,14 +61,12 @@ const DirectionsMap = () => {
     zoomControl: true,
     mapTypeControl: false,
     scaleControl: false,
-    streetViewControl: false,
-    rotateControl: false,
     fullscreenControl: false,
     mapTypeId: "roadmap", // Use the hybrid map type for more detailed visuals
   };
 
   const haversineDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the Earth in kilometers
+    const R = 3958.8;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
 
@@ -80,7 +78,7 @@ const DirectionsMap = () => {
         Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c; // Distance in kilometers
+    const d = R * c;
     return d;
   };
   const updateCarMarker = (position) => {
@@ -96,17 +94,14 @@ const DirectionsMap = () => {
     }
     setUserPosition(position);
   };
+
   const handleGeolocationUpdate = (position) => {
     const newPosition = {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     };
-    console.log("New position:", newPosition); // Log the new position
     updateCarMarker(newPosition);
-
     if (directions) {
-      console.log(directions.routes[0].legs[0].steps.length);
-
       if (currentStepIndex < directions.routes[0].legs[0].steps.length) {
         const nextStep = directions.routes[0].legs[0].steps[currentStepIndex];
         const distanceToNextStep = haversineDistance(
@@ -121,8 +116,8 @@ const DirectionsMap = () => {
         ); // Log the next step start location
         console.log("Distance to next step:", distanceToNextStep); // Log the distance to the next step
 
-        if (distanceToNextStep < 0.05) {
-          // 0.05 km = 50 meters
+        if (distanceToNextStep < 0.0378788) {
+          // 0.0378788 miles = 200 feet
           speakDirections(nextStep.instructions);
           setCurrentStepIndex(currentStepIndex + 1);
         }
@@ -154,12 +149,10 @@ const DirectionsMap = () => {
     }
   };
 
+  // To only speak the first time this one may work better.
   const directionsCallback = (response, status) => {
     if (status === "OK") {
       setDirections(response);
-      if (directions) {
-        console.log(directions.routes[0].legs[0].steps.length);
-      }
       // Set and display the first direction upon load
       if (response.routes[0].legs[0].steps.length > 0) {
         const firstStep = response.routes[0].legs[0].steps[0].instructions;
@@ -178,47 +171,16 @@ const DirectionsMap = () => {
         }, 8000);
         setTimeoutId(id);
 
-        // Speak the initial message
-        speakDirections(initialMessage);
+        // Speak the initial message if the synth is not already speaking
+        if (!window.speechSynthesis.speaking) {
+          speakDirections(initialMessage);
+        }
       }
     } else {
       console.error(`Error fetching directions: ${status}`);
       setError(`Error fetching directions: ${status}`);
     }
   };
-
-  // To only speak the first time this one may work better.
-  // const directionsCallback = (response, status) => {
-  //   if (status === "OK") {
-  //     setDirections(response);
-  //     // Set and display the first direction upon load
-  //     if (response.routes[0].legs[0].steps.length > 0) {
-  //       const firstStep = response.routes[0].legs[0].steps[0].instructions;
-  //       const rawInitialMessage = `We greatly appreciate your time to deliver today. Allow me to help you find your way. ${firstStep}`;
-
-  //       // Clean any HTML tags in the initial message
-  //       const initialMessage = rawInitialMessage.replace(/<[^>]*>?/gm, "");
-
-  //       // Set the initial direction text and remove it after 8 seconds
-  //       if (timeoutId) {
-  //         clearTimeout(timeoutId);
-  //       }
-  //       setDirectionText(initialMessage);
-  //       const id = setTimeout(() => {
-  //         setDirectionText("");
-  //       }, 8000);
-  //       setTimeoutId(id);
-
-  //       // Speak the initial message if the synth is not already speaking
-  //       if (!window.speechSynthesis.speaking) {
-  //         speakDirections(initialMessage);
-  //       }
-  //     }
-  //   } else {
-  //     console.error(`Error fetching directions: ${status}`);
-  //     setError(`Error fetching directions: ${status}`);
-  //   }
-  // };
 
   const handleMapLoad = (map) => {
     mapRef.current = map;
@@ -278,6 +240,11 @@ const DirectionsMap = () => {
           {directionText}
         </div>
       )}
+      {/* Display a button that says "Arrived" that when clicked it Links to the QR page */}
+      <Link to="/deliver">
+        <button className="arrived-button">Arrived</button>
+      </Link>
+
     </LoadScript>
   );
 };
