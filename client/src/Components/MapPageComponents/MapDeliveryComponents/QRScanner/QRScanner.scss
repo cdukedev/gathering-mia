@@ -8,12 +8,13 @@
     background-image: url(../../../../assets/images/qr-scanner-background.png);
     position: absolute;
     &__image{
+        width: 50vw;
         padding-top: 10vh;
     }
     &__text{
         color: #40474C;
         width: 69vw;
-        font-size: larger;
+        font-size: 1.1rem;
         text-align: center;
         padding: 2vh 0;
         &-container{
