@@ -1,35 +1,46 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./Deliveries.scss";
+import { Link } from "react-router-dom";
 import { MapPageContext } from "../../../../contexts/MapPageContext";
+import { RecipientContext } from "../../../../contexts/RecipientContext";
+import { GeolocationContext } from "../../../../contexts/GeolocationContext";
+import { FoodBankContext } from "../../../../contexts/FoodBankContext";
 
 function Deliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);
+
+  //Plans: In the future, the finalDestination will be set by the user prior to making their deliveries, their destionation will be stored so that when they log in their destination can be loaded as the default.
   const [finalDestination, setFinalDestination] = useState({
     lat: 24.2801423,
     lng: -80.6620736,
   });
+
+  //Plans: In the future, the capacity will be set by the user in their profile.
   const [capacity, setCapacity] = useState(9);
+
   const [loading, setLoading] = useState(true);
 
-  const {
-    recipients,
-    coords,
-    zone,
-    handleMenuClick,
-    handleGeolocationRequest,
-  } = useContext(MapPageContext);
+  const { handleGeolocationRequest, coords } = useContext(GeolocationContext);
 
+  const { recipients } = useContext(RecipientContext);
+
+  const zone = 1;
   useEffect(() => {
-    handleGeolocationRequest();
+    const fetchCoords = async () => {
+      await handleGeolocationRequest();
+    };
+    fetchCoords();
   }, [handleGeolocationRequest]);
 
   useEffect(() => {
-    setSortedRecipients(
-      findOptimalPath(recipients, coords, finalDestination, capacity, zone)
-    );
-    setLoading(false);
+    if (coords) {
+      setSortedRecipients(
+        findOptimalPath(recipients, coords, finalDestination, capacity, zone)
+      );
+      setLoading(false);
+    }
   }, [recipients, coords, finalDestination]);
-
+  console.log(sortedRecipients);
   function findOptimalPath(
     recipients,
     currentLocation,
@@ -50,14 +61,18 @@ function Deliveries() {
         currentLocation,
         finalDestination
       );
+
       closestRecipient.distance = calculateDistance(
         currentLocation,
         closestRecipient.position
       );
+
       optimalPath.push(closestRecipient);
+
       remainingRecipients = remainingRecipients.filter(
         (recipient) => recipient.id !== closestRecipient.id
       );
+
       currentLocation = closestRecipient.position;
       count = count + 1;
     }
@@ -114,7 +129,7 @@ function Deliveries() {
       : Math.round(distance);
   }
 
-  if (loading) {
+  if (loading || !coords || !sortedRecipients.length) {
     return <div>Loading...</div>;
   } else {
     return (
@@ -160,7 +175,7 @@ function Deliveries() {
                         }}
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}`}
+                        href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`}
                       >
                         Get Directions!
                       </a>
@@ -170,15 +185,11 @@ function Deliveries() {
               </div>
             );
           })}
-          <button
-            className="top-row-button"
-            onClick={() => {
-              alert("Thank you for completing your deliveries!");
-              handleMenuClick("defaultMenu");
-            }}
-          >
-            Click Here to confirm that all deliveries have been completed.
-          </button>
+          <Link to="/">
+            <button className="top-row-button">
+              Click Here to confirm that all deliveries have been completed.
+            </button>
+          </Link>
         </div>
       </div>
     );
