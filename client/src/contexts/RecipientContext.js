@@ -1,5 +1,5 @@
-import React, { createContext, useState, useCallback } from 'react';
-import recipients from '../data/recipients.json';
+import React, { createContext, useState, useCallback } from "react";
+import recipients from "../data/recipients.json";
 
 const RecipientContext = createContext();
 

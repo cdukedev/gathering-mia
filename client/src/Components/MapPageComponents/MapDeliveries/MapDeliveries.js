@@ -8,11 +8,13 @@ import { FoodBankContext } from "../../../contexts/FoodBankContext";
 import { useNavigate } from "react-router-dom";
 
 function MapDeliveries() {
-  const { handleMenuClick } = useContext(MapPageContext);
+  const handleMenuClick = useContext(MapPageContext);
   const { coords } = useContext(GeolocationContext); // Consume GeolocationContext
-  const { foodBanks } = useContext(FoodBankContext); // Consume FoodBankContext
+  const { foodBanks, setFoodBankZone } = useContext(FoodBankContext); // Consume FoodBankContext
   const { handleDeliveryClick } = useContext(RecipientContext);
+
   const navigate = useNavigate();
+
   const calculateDistance = (centerLocation, foodBank) => {
     const { lat, lng } = centerLocation;
     const { lat: foodBankLat, lng: foodBankLng } = foodBank;
@@ -21,6 +23,7 @@ function MapDeliveries() {
     );
     return { distance };
   };
+
   foodBanks.map((foodBank) => {
     if (coords) {
       let distance = calculateDistance(coords, foodBank.position);
@@ -92,7 +95,6 @@ function MapDeliveries() {
                           `/directions/${coords.lat}/${coords.lng}/${foodBank.position.lat}/${foodBank.position.lng}`
                         );
                       }}
-                      zone={foodBank.zone}
                     >
                       Get Directions
                     </button>
