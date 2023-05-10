@@ -1,12 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
-import "./Deliveries.scss";
+import "./HomeDeliveries.scss";
 import { Link } from "react-router-dom";
-import { MapPageContext } from "../../../../contexts/MapPageContext";
-import { RecipientContext } from "../../../../contexts/RecipientContext";
-import { GeolocationContext } from "../../../../contexts/GeolocationContext";
-import { FoodBankContext } from "../../../../contexts/FoodBankContext";
+import { RecipientContext } from "../../contexts/RecipientContext";
+import { GeolocationContext } from "../../contexts/GeolocationContext";
 
-function Deliveries() {
+function HomeDeliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);
 
   //Plans: In the future, the finalDestination will be set by the user prior to making their deliveries, their destionation will be stored so that when they log in their destination can be loaded as the default.
@@ -40,7 +38,7 @@ function Deliveries() {
       setLoading(false);
     }
   }, [recipients, coords, finalDestination]);
-  console.log(sortedRecipients);
+
   function findOptimalPath(
     recipients,
     currentLocation,
@@ -51,7 +49,7 @@ function Deliveries() {
     let optimalPath = [];
     // filter all recipients by zone
     let filteredRecipients = recipients.filter(
-      (recipient) => recipient.zone == zone
+      (recipient) => recipient.zone === zone
     );
     let remainingRecipients = [...filteredRecipients];
     while (remainingRecipients.length > 0 && capacity > optimalPath.length) {
@@ -80,17 +78,28 @@ function Deliveries() {
     return optimalPath;
   }
 
+  /**
+   * Finds the closest recipient to the current location
+   * @param {*} recipients 
+   * @param {*} currentLocation 
+   * @param {*} finalDestination 
+   * @returns 
+   */ 
   function findClosestRecipient(recipients, currentLocation, finalDestination) {
-    return recipients.reduce((closest, recipient) => {
+    let closest;
+
+    for (let recipient of recipients) {
       const distanceToRecipient = calculateDistance(
         currentLocation,
         recipient.position
       );
-
       const distanceToFinalDestination = calculateDistance(
         recipient.position,
         finalDestination
       );
+      console.log("distanceToFinalDestination", distanceToFinalDestination);
+      console.log("distanceToRecipient", distanceToRecipient);
+
       if (
         !closest ||
         (distanceToRecipient <
@@ -98,13 +107,12 @@ function Deliveries() {
           distanceToFinalDestination <
             calculateDistance(closest.position, finalDestination))
       ) {
-        return recipient;
+        closest = recipient;
       }
+    }
 
-      return closest;
-    }, null);
+    return closest;
   }
-
   function calculateDistance(locationA, locationB) {
     if (!locationA || !locationB) return null;
 
@@ -120,13 +128,16 @@ function Deliveries() {
       return null;
     }
 
-    const distance = Math.sqrt(
+    const distanceInKm = Math.sqrt(
       Math.pow(latA - latB, 2) + Math.pow(lngA - lngB, 2)
     );
 
-    return distance < 10
-      ? Math.round(distance * 10) / 10
-      : Math.round(distance);
+    // Convert km to miles
+    const distanceInMiles = distanceInKm * 0.621371;
+
+    return distanceInMiles < 10
+      ? Math.round(distanceInMiles * 10) / 10
+      : Math.round(distanceInMiles);
   }
 
   if (loading || !coords || !sortedRecipients.length) {
@@ -196,4 +207,4 @@ function Deliveries() {
   }
 }
 
-export default Deliveries;
+export default HomeDeliveries;

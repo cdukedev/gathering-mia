@@ -5,7 +5,7 @@ import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrapper
 import MapHelpWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapHelpWrapper/MapHelpWrapper";
 import DefaultMenuWrapper from "../../Components/MapPageComponents/MapPageWrappers/DefaultMenuWrapper/DefaultMenuWrapper";
 import MapFilterWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapFilterWrapper/MapFilterWrapper";
-import QrScanner from "../../Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
+import QrScanner from "../../Components/MapPageComponents/HomeDeliveryComponents/QRScanner/QRScanner";
 import { MapPageContext } from "../../contexts/MapPageContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
 import { FoodBankContext } from "../../contexts/FoodBankContext";

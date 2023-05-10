@@ -1,9 +1,9 @@
 import React from "react";
-import Deliveries from "../../MapDeliveryComponents/Deliveries/Deliveries";
+import HomeDeliveries from "../../../../pages/HomeDeliveries/HomeDeliveries";
 
 const DeliveriesWrapper = ({ handleMenuClick, handleDeliveryClick }) => (
   <div className="deliveries">
-    <Deliveries
+    <HomeDeliveries
       handleMenuClick={handleMenuClick}
       handleDeliveryClick={handleDeliveryClick}
     />

@@ -4,14 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MapPage from "./pages/MapPage/MapPage";
 import Home from "./pages/Home/Home";
 import DirectionsMap from "./pages/DirectionsMap/DirectionsMap";
-import QRScanner from "./Components/MapPageComponents/MapDeliveryComponents/QRScanner/QRScanner";
+import QRScanner from "./Components/MapPageComponents/HomeDeliveryComponents/QRScanner/QRScanner";
 import { FoodBankProvider } from "./contexts/FoodBankContext";
 import { CommunityGardenProvider } from "./contexts/CommunityGardenContext";
 import { RecipientProvider } from "./contexts/RecipientContext";
 import { GeolocationProvider } from "./contexts/GeolocationContext";
 import { MapPageProvider } from "./contexts/MapPageContext";
-import Deliveries from "./Components/MapPageComponents/MapDeliveryComponents/Deliveries/Deliveries";
-
+import HomeDeliveries from "./pages/HomeDeliveries/HomeDeliveries";
 function App() {
   return (
     <Router>
@@ -46,7 +45,7 @@ function App() {
                 <RecipientProvider>
                   <GeolocationProvider>
                     <MapPageProvider>
-                      <Deliveries />
+                      <HomeDeliveries />
                     </MapPageProvider>
                   </GeolocationProvider>
                 </RecipientProvider>
