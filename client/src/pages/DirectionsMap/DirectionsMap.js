@@ -184,6 +184,7 @@ const DirectionsMap = () => {
 
   const handleMapLoad = (map) => {
     mapRef.current = map;
+    const google = window.google;
     if (!directions) {
       const request = {
         origin: center,
@@ -193,10 +194,7 @@ const DirectionsMap = () => {
         },
         travelMode: "DRIVING",
       };
-      new window.google.maps.DirectionsService().route(
-        request,
-        directionsCallback
-      );
+      new google.maps.DirectionsService().route(request, directionsCallback);
     }
 
     if (!watchId) {
@@ -244,7 +242,6 @@ const DirectionsMap = () => {
       <Link to="/deliver">
         <button className="arrived-button">Arrived</button>
       </Link>
-
     </LoadScript>
   );
 };
