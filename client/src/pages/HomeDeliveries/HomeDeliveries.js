@@ -3,6 +3,7 @@ import "./HomeDeliveries.scss";
 import { Link } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
+import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
 
 function HomeDeliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);
@@ -80,11 +81,11 @@ function HomeDeliveries() {
 
   /**
    * Finds the closest recipient to the current location
-   * @param {*} recipients 
-   * @param {*} currentLocation 
-   * @param {*} finalDestination 
-   * @returns 
-   */ 
+   * @param {*} recipients
+   * @param {*} currentLocation
+   * @param {*} finalDestination
+   * @returns
+   */
   function findClosestRecipient(recipients, currentLocation, finalDestination) {
     let closest;
 
@@ -141,7 +142,7 @@ function HomeDeliveries() {
   }
 
   if (loading || !coords || !sortedRecipients.length) {
-    return <div>Loading...</div>;
+    return <HomeDeliveriesSplash />;
   } else {
     return (
       <div className="deliveries__container">
