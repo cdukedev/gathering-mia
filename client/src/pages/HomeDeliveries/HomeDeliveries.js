@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
 import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function HomeDeliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);
@@ -24,6 +26,7 @@ function HomeDeliveries() {
   const { recipients } = useContext(RecipientContext);
 
   const zone = 1;
+
   useEffect(() => {
     const fetchCoords = async () => {
       await handleGeolocationRequest();
@@ -178,13 +181,6 @@ function HomeDeliveries() {
                     <div>
                       <a
                         className="deliveries__top-row--recipient-right--directions"
-                        // open in new tab
-                        //add an alert that the directions are being opened in a new tab
-                        onClick={() => {
-                          alert(
-                            "Directions are being opened in a new page, you will need to return to this page to continue deliveries."
-                          );
-                        }}
                         target="_blank"
                         rel="noopener noreferrer"
                         href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`}
