@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
 import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function HomeDeliveries() {
   const [sortedRecipients, setSortedRecipients] = useState([]);
