@@ -1,4 +1,4 @@
-import BackButton from "./BackButton";
+import BackButton from "../Components/BackButton/BackButton";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { mount } from "enzyme";
