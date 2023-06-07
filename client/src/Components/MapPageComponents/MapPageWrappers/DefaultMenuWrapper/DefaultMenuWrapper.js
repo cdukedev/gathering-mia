@@ -1,7 +1,7 @@
 import React from "react";
 import Map from "../../Map/Map";
 import MapMenu from "../../MapMenu/MapMenu";
-import BackButton from "../../../BackButton/BackButton";
+import BackButton from "../../../BackButton/BackButton.tsx";
 
 const DefaultMenuWrapper = ({ handleMenuClick }) => (
   <div className="map-container" data-testid="map-container">

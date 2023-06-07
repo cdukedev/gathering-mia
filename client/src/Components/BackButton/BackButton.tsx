@@ -3,7 +3,7 @@ import React from "react";
 import "./BackButton.scss";
 import { Link } from "react-router-dom";
 
-export default function BackButton() {
+const BackButton: React.FC = () => {
   return (
     <div className="back-button">
       <Link to="/">
@@ -11,4 +11,6 @@ export default function BackButton() {
       </Link>
     </div>
   );
-}
+};
+
+export default BackButton;

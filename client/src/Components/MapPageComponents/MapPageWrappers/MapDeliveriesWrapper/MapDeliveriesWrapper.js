@@ -1,7 +1,7 @@
 import React from "react";
 import Map from "../../Map/Map";
 import MapDeliveries from "../../MapDeliveries/MapDeliveries";
-import BackButton from "../../../BackButton/BackButton";
+import BackButton from "../../../BackButton/BackButton.tsx";
 
 const MapDeliveriesWrapper = ({
   handleMenuClick,

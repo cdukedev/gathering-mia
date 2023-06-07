@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import QRScannerImage from "../../../../assets/images/qr-scanner-image.png";
 import "./QRScanner.scss";
-import BackButton from "../../../../Components/BackButton/BackButton.js";
+import BackButton from "../../../../Components/BackButton/BackButton.tsx";
 
 function QRScanner() {
   // Destructure the context value to get handleMenuClick

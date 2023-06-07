@@ -1,7 +1,7 @@
 import React from "react";
 import Map from "../../Map/Map";
 import MapFilter from "../../MapFilter/MapFilter";
-import BackButton from "../../../BackButton/BackButton";
+import BackButton from "../../../BackButton/BackButton.tsx";
 
 const MapFilterWrapper = ({
   handleCommunityGardenToggle,
