@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import QRScannerImage from "../../../../assets/images/qr-scanner-image.png";
 import "./QRScanner.scss";
-import BackButton from "../../../../Components/BackButton/BackButton.js";
-import { MapPageContext } from "../../../../context/MapPageContext";
+import BackButton from "../../../../Components/BackButton/BackButton.tsx";
+
 function QRScanner() {
-  const { handleMenuClick } = useContext(MapPageContext);
+  // Destructure the context value to get handleMenuClick
+
   return (
     <>
       <div className="qr-scanner">
@@ -24,15 +26,13 @@ function QRScanner() {
             your deliveries.
           </p>
         </div>
-        <button
-          className="qr-scanner__button"
-          onClick={() => handleMenuClick("deliveries")}
-        >
-          Begin Deliveries
-        </button>
+        <Link to="/deliveries">
+          <button className="qr-scanner__button">Begin Deliveries</button>
+        </Link>
       </div>
       <BackButton />
     </>
   );
 }
+
 export default QRScanner;
