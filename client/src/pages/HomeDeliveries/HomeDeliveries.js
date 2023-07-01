@@ -6,22 +6,19 @@ import { GeolocationContext } from "../../contexts/GeolocationContext";
 import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
 
 function HomeDeliveries() {
-  const [sortedRecipients, setSortedRecipients] = useState([]);
-
-  //Plans: In the future, the finalDestination will be set by the user prior to making their deliveries, their destionation will be stored so that when they log in their destination can be loaded as the default.
+  // State
   const [finalDestination, setFinalDestination] = useState({
     lat: 24.2801423,
     lng: -80.6620736,
-  });
-
-  //Plans: In the future, the capacity will be set by the user in their profile.
-  const [capacity, setCapacity] = useState(9);
-
+  }); //Plans: In the future, the finalDestination will be set by the user prior to making their deliveries, their destionation will be stored so that when they log in their destination can be loaded as the default.
+  const [deliveryCapacity, setDeliveryCapacity] = useState(9); //Plans: In the future, the capacity will be set by the user in their profile.
+  const [sortedRecipients, setSortedRecipients] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
+  // Context
   const { handleGeolocationRequest, coords } = useContext(GeolocationContext);
-
-  const { recipients } = useContext(RecipientContext);
+  const { recipients, loadingRecipients } = useContext(RecipientContext);
 
   const zone = 1;
 
@@ -33,13 +30,20 @@ function HomeDeliveries() {
   }, [handleGeolocationRequest]);
 
   useEffect(() => {
-    if (coords) {
-      setSortedRecipients(
-        findOptimalPath(recipients, coords, finalDestination, capacity, zone)
-      );
-      setLoading(false);
+    if (!loadingRecipients) {
+      setSortedRecipients((prevRecipients) => {
+        const newRecipients = findOptimalPath(
+          recipients,
+          coords,
+          finalDestination,
+          deliveryCapacity,
+          zone
+        );
+        setLoading(false);
+        return newRecipients;
+      });
     }
-  }, [recipients, coords, finalDestination]);
+  }, [recipients, loadingRecipients]);
 
   function findOptimalPath(
     recipients,
@@ -76,7 +80,7 @@ function HomeDeliveries() {
       currentLocation = closestRecipient.position;
       count = count + 1;
     }
-
+    console.log("optimalPath:", optimalPath);
     return optimalPath;
   }
 
@@ -87,6 +91,7 @@ function HomeDeliveries() {
    * @param {*} finalDestination
    * @returns
    */
+
   function findClosestRecipient(recipients, currentLocation, finalDestination) {
     let closest;
 
@@ -99,8 +104,6 @@ function HomeDeliveries() {
         recipient.position,
         finalDestination
       );
-      console.log("distanceToFinalDestination", distanceToFinalDestination);
-      console.log("distanceToRecipient", distanceToRecipient);
 
       if (
         !closest ||
@@ -116,11 +119,12 @@ function HomeDeliveries() {
     return closest;
   }
   function calculateDistance(locationA, locationB) {
+    // Check if locations are valid
     if (!locationA || !locationB) return null;
-
     const { lat: latA, lng: lngA } = locationA;
     const { lat: latB, lng: lngB } = locationB;
 
+    // Check if lat and lng are numbers
     if (
       typeof latA !== "number" ||
       typeof lngA !== "number" ||
@@ -130,6 +134,7 @@ function HomeDeliveries() {
       return null;
     }
 
+    // Calculate distance in km
     const distanceInKm = Math.sqrt(
       Math.pow(latA - latB, 2) + Math.pow(lngA - lngB, 2)
     );
@@ -142,7 +147,7 @@ function HomeDeliveries() {
       : Math.round(distanceInMiles);
   }
 
-  if (loading || !coords || !sortedRecipients.length) {
+  if (loadingRecipients || loading || !coords || !sortedRecipients.length) {
     return <HomeDeliveriesSplash />;
   } else {
     return (
@@ -183,7 +188,7 @@ function HomeDeliveries() {
                         rel="noopener noreferrer"
                         href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`}
                       >
-                        Get Directions!
+                        Get Directions
                       </a>
                     </div>
                   </div>
