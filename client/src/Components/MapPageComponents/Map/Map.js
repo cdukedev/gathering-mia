@@ -9,11 +9,12 @@ import {
   LoadScript,
   Marker,
 } from "@react-google-maps/api";
+import Splash from "../../Splash/Splash";
 import foodBank from "../../../assets/icons/foodbank.svg";
 import communityGarden from "../../../assets/icons/community-garden.svg";
 
 const Map = ({ height, zoom }) => {
-  const { foodBanks, foodBankToggle } = useContext(FoodBankContext);
+  const { foodBanks, foodBankToggle, loading } = useContext(FoodBankContext);
   const { communityGardens, communityGardenToggle } = useContext(
     CommunityGardenContext
   );
@@ -49,6 +50,10 @@ const Map = ({ height, zoom }) => {
   const markerClicked = useCallback((index) => {
     setActiveInfoWindow(index);
   }, []);
+
+  if (loading) {
+    return <Splash />;
+  }
 
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
