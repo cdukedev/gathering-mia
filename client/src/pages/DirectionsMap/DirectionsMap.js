@@ -5,6 +5,7 @@ import {
   GoogleMap,
   LoadScript,
   DirectionsRenderer,
+  Marker,
 } from "@react-google-maps/api";
 
 const DirectionsMap = () => {
@@ -88,7 +89,10 @@ const DirectionsMap = () => {
       const newMarker = new window.google.maps.Marker({
         position,
         map: mapRef.current,
-        icon: "https://maps.gstatic.com/mapfiles/ms2/micons/red-pushpin.png",
+        icon: {
+          url: "https://www.clipartmax.com/png/small/61-616026_red-driver-marker-clip-art-at-clker-car-marker-png.png",
+          scaledSize: new window.google.maps.Size(25, 50), // sets the icon size to 50x50 pixels
+        },
       });
       setCarMarker(newMarker);
     }
@@ -114,7 +118,6 @@ const DirectionsMap = () => {
           "Next step start location:",
           nextStep.start_location.toJSON()
         ); // Log the next step start location
-        console.log("Distance to next step:", distanceToNextStep); // Log the distance to the next step
 
         if (distanceToNextStep < 0.0378788) {
           // 0.0378788 miles = 200 feet
@@ -162,9 +165,9 @@ const DirectionsMap = () => {
         const initialMessage = rawInitialMessage.replace(/<[^>]*>?/gm, "");
 
         // Set the initial direction text and remove it after 8 seconds
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
+        // if (timeoutId) {
+        //   clearTimeout(timeoutId);
+        // }
         setDirectionText(initialMessage);
         const id = setTimeout(() => {
           setDirectionText("");
@@ -229,6 +232,15 @@ const DirectionsMap = () => {
           <DirectionsRenderer
             options={{
               directions,
+              suppressMarkers: true,
+            }}
+          />
+        )}
+        {directions && (
+          <Marker
+            position={{
+              lat: parseFloat(foodBankLat),
+              lng: parseFloat(foodBankLng),
             }}
           />
         )}
