@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
 import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
+import Recipients from "../../Components/MapPageComponents/HomeDeliveryComponents/Recipient/Recipient";
 
 function HomeDeliveries() {
   // State
@@ -14,7 +15,6 @@ function HomeDeliveries() {
   const [deliveryCapacity, setDeliveryCapacity] = useState(9); //Plans: In the future, the capacity will be set by the user in their profile.
   const [sortedRecipients, setSortedRecipients] = useState([]);
   const [loading, setLoading] = useState(true);
-  
 
   // Context
   const { handleGeolocationRequest, coords } = useContext(GeolocationContext);
@@ -58,7 +58,11 @@ function HomeDeliveries() {
       (recipient) => recipient.zone === zone
     );
     let remainingRecipients = [...filteredRecipients];
-    while (remainingRecipients.length > 0 && capacity > optimalPath.length) {
+    for (
+      let i = 0;
+      i < remainingRecipients.length && capacity > optimalPath.length;
+      i++
+    ) {
       let count = 0;
       let closestRecipient = findClosestRecipient(
         remainingRecipients,
@@ -80,7 +84,6 @@ function HomeDeliveries() {
       currentLocation = closestRecipient.position;
       count = count + 1;
     }
-    console.log("optimalPath:", optimalPath);
     return optimalPath;
   }
 
@@ -157,44 +160,7 @@ function HomeDeliveries() {
         </h3>
         <div className="deliveries__top-row--recipient--container">
           {sortedRecipients.map((recipient) => {
-            return (
-              <div
-                className="deliveries__top-row--recipient--radius"
-                key={recipient.id}
-              >
-                <div
-                  className="deliveries__top-row--recipient"
-                  key={recipient.id}
-                >
-                  <div className="deliveries__top-row--recipient-left">
-                    <div className="deliveries__top-row--recipient--item deliveries__top-row--recipient-left--name">
-                      {recipient.name}
-                    </div>
-                    <div className="deliveries__top-row--recipient--item deliveries__top-row--recipient-left--address">
-                      {recipient.address}
-                    </div>
-                    <div className="deliveries__top-row--recipient--item deliveries__top-row--recipient-left--phone">
-                      {recipient.phone}
-                    </div>
-                  </div>
-                  <div className="deliveries__top-row--recipient-right">
-                    <div className="deliveries__top-row--recipient--item deliveries__top-row--recipient-right--distance">
-                      {recipient.distance} miles
-                    </div>
-                    <div>
-                      <a
-                        className="deliveries__top-row--recipient-right--directions"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`}
-                      >
-                        Get Directions
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
+            return <Recipients recipient={recipient} coords={coords} />;
           })}
           <Link to="/">
             <button className="top-row-button">
