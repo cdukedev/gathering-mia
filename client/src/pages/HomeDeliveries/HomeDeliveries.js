@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";
 import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
-import Recipients from "../../Components/MapPageComponents/HomeDeliveryComponents/Recipient/Recipient";
+import RecipientsList from "../../Components/MapPageComponents/HomeDeliveryComponents/RecipientsList/RecipientsList";
 
 function HomeDeliveries() {
   // State
@@ -159,9 +159,7 @@ function HomeDeliveries() {
           Deliver in the order given for the shortest total trip.
         </h3>
         <div className="deliveries__top-row--recipient--container">
-          {sortedRecipients.map((recipient) => {
-            return <Recipients recipient={recipient} coords={coords} />;
-          })}
+          <RecipientsList recipients={recipients} coords={coords} />
           <Link to="/">
             <button className="top-row-button">
               Click Here to confirm that all deliveries have been completed.
