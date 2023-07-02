@@ -1,12 +1,9 @@
 import React from "react";
 import HomeDeliveries from "../../../../pages/HomeDeliveries/HomeDeliveries";
 
-const DeliveriesWrapper = ({ handleMenuClick, handleDeliveryClick }) => (
+const DeliveriesWrapper = () => (
   <div className="deliveries">
-    <HomeDeliveries
-      handleMenuClick={handleMenuClick}
-      handleDeliveryClick={handleDeliveryClick}
-    />
+    <HomeDeliveries />
   </div>
 );
 

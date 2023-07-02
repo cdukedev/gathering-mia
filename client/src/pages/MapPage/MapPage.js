@@ -12,8 +12,7 @@ import { FoodBankContext } from "../../contexts/FoodBankContext";
 import { CommunityGardenContext } from "../../contexts/CommunityGardenContext";
 
 const MapPage = () => {
-  const { menu, handleMenuClick, handleDeliveryClick } =
-    useContext(MapPageContext);
+  const { menu, handleMenuClick } = useContext(MapPageContext);
 
   const { coords, handleGeolocationRequest } = useContext(GeolocationContext);
 
@@ -33,17 +32,13 @@ const MapPage = () => {
           {menu === "mapDeliveries" && (
             <MapDeliveriesWrapper
               handleMenuClick={handleMenuClick}
-              handleDeliveryClick={handleDeliveryClick}
               foodBanks={foodBanks}
               coords={coords}
             />
           )}
 
           {menu === "deliveries" && (
-            <DeliveriesWrapper
-              handleMenuClick={handleMenuClick}
-              handleDeliveryClick={handleDeliveryClick}
-            />
+            <DeliveriesWrapper handleMenuClick={handleMenuClick} />
           )}
 
           {menu === "mapHelp" && (

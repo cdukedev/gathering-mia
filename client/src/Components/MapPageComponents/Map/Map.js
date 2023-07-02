@@ -1,5 +1,4 @@
 import React, { useState, useContext, useCallback, useMemo } from "react";
-import { MapPageContext } from "../../../contexts/MapPageContext";
 import { GeolocationContext } from "../../../contexts/GeolocationContext"; // Import GeolocationContext
 import { FoodBankContext } from "../../../contexts/FoodBankContext";
 import { CommunityGardenContext } from "../../../contexts/CommunityGardenContext";

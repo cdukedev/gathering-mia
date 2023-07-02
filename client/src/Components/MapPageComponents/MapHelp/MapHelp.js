@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./MapHelp.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
 import FoodBank from "../../../assets/icons/foodbank.svg";
+import { MapPageContext } from "../../../contexts/MapPageContext";
 import CommunityGarden from "../../../assets/icons/community-garden.svg";
 function MapHelp(props) {
+  const { handleMenuClick } = useContext(MapPageContext);
   return (
     <div className="map-help__container">
       <div className="map-help__text">
@@ -12,7 +14,7 @@ function MapHelp(props) {
           <img
             className="map-help__top-row--arrow"
             onClick={() => {
-              props.handleMenuClick("defaultMenu");
+              handleMenuClick("defaultMenu");
             }}
             src={MapMenuArrow}
             alt="menu arrow to close helper"

@@ -8,9 +8,9 @@ import { FoodBankContext } from "../../../contexts/FoodBankContext";
 import { useNavigate } from "react-router-dom";
 
 function MapDeliveries() {
-  const handleMenuClick = useContext(MapPageContext);
+  const { handleMenuClick } = useContext(MapPageContext);
   const { coords } = useContext(GeolocationContext); // Consume GeolocationContext
-  const { foodBanks} = useContext(FoodBankContext); // Consume FoodBankContext
+  const { foodBanks } = useContext(FoodBankContext); // Consume FoodBankContext
   const { handleDeliveryClick } = useContext(RecipientContext);
 
   const navigate = useNavigate();
