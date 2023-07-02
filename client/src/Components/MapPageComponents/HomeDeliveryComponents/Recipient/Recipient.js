@@ -9,16 +9,21 @@ function Recipient({ recipient, coords }) {
   const handleRecipientClick = (e) => {
     console.log("recipient clicked");
     setCurrentRecipient(recipient);
-    // Open a separate window with Google Maps directions
-    window.open(
-      `https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`,
-      "_blank"
-    );
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${coords.lat},${coords.lng}&destination=${recipient.position.lat},${recipient.position.lng}&travelmode=driving`;
+
+    if (isMobile) {
+      // On mobile devices, just navigate to the URL, don't open a new tab
+      window.location.href = mapsUrl;
+    } else {
+      // On non-mobile devices, open a new tab
+      window.open(mapsUrl, "_blank");
+    }
+
     navigate(
       `/directions/${coords.lat}/${coords.lng}/${recipient.position.lat}/${recipient.position.lng}`
     );
-
-    // Navigate to the DirectionsMap Component without react router dom
   };
 
   return (
