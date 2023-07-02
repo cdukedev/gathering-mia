@@ -7,7 +7,9 @@ const RecipientContext = createContext();
 const RecipientProvider = ({ children }) => {
   const [zone, setZone] = useState(null);
   const [recipients, setRecipients] = useState(null);
+  const [currentRecipient, setCurrentRecipient] = useState(null);
   const [loadingRecipients, setLoadingRecipients] = useState(true); // add loading state
+  const [sortedRecipients, setSortedRecipients] = useState([]);
   const [error, setError] = useState(null);
 
   const handleDeliveryClick = useCallback((clicked, clickedZone) => {
@@ -34,8 +36,12 @@ const RecipientProvider = ({ children }) => {
     recipients,
     loadingRecipients,
     handleDeliveryClick,
+    sortedRecipients,
+    setSortedRecipients,
+    currentRecipient,
+    setCurrentRecipient,
   };
-  
+
   return (
     <RecipientContext.Provider value={contextValue}>
       {children}

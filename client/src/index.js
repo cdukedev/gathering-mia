@@ -1,12 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { FoodBankProvider } from "./contexts/FoodBankContext";
+import { CommunityGardenProvider } from "./contexts/CommunityGardenContext";
+import { RecipientProvider } from "./contexts/RecipientContext";
+import { GeolocationProvider } from "./contexts/GeolocationContext";
+import { MapPageProvider } from "./contexts/MapPageContext";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <App />
+  <FoodBankProvider>
+    <CommunityGardenProvider>
+      <RecipientProvider>
+        <GeolocationProvider>
+          <MapPageProvider>
+            <App />
+          </MapPageProvider>
+        </GeolocationProvider>
+      </RecipientProvider>
+    </CommunityGardenProvider>
+  </FoodBankProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

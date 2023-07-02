@@ -1,6 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "./DirectionsMap.scss";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { RecipientContext } from "../../contexts/RecipientContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   GoogleMap,
   LoadScript,
@@ -9,7 +13,11 @@ import {
 } from "@react-google-maps/api";
 
 const DirectionsMap = () => {
-  const { userLat, userLng, foodBankLat, foodBankLng } = useParams();
+  const navigate = useNavigate();
+  const { userLat, userLng, destinationLat, destinationLng } = useParams();
+  const { sortedRecipients, setSortedRecipients, currentRecipient } =
+    useContext(RecipientContext);
+  const [hasCallbackRun, setHasCallbackRun] = useState(false);
   const center = {
     lat: parseFloat(userLat),
     lng: parseFloat(userLng),
@@ -22,6 +30,7 @@ const DirectionsMap = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [directionText, setDirectionText] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
+  const google = window.google;
 
   const mapRef = useRef(null);
 
@@ -30,17 +39,14 @@ const DirectionsMap = () => {
       const request = {
         origin: center,
         destination: {
-          lat: parseFloat(foodBankLat),
-          lng: parseFloat(foodBankLng),
+          lat: parseFloat(destinationLat),
+          lng: parseFloat(destinationLng),
         },
         travelMode: "DRIVING",
       };
-      new window.google.maps.DirectionsService().route(
-        request,
-        directionsCallback
-      );
+      new google.maps.DirectionsService().route(request, directionsCallback);
     }
-  }, [directions, center, foodBankLat, foodBankLng]);
+  }, [directions, center, destinationLat, destinationLng]);
 
   useEffect(() => {
     if (mapRef.current && !watchId) {
@@ -66,6 +72,17 @@ const DirectionsMap = () => {
     mapTypeId: "roadmap", // Use the hybrid map type for more detailed visuals
   };
 
+  const handleDeliveryClick = () => {
+    const newRecipients = [...sortedRecipients];
+    newRecipients.shift();
+    setSortedRecipients(newRecipients);
+    console.log("sortedRecipients", sortedRecipients);
+    console.log("newRecipients", newRecipients);
+    setCurrentStepIndex(0);
+    setDirections(null);
+    navigate("/deliveries");
+  };
+
   const haversineDistance = (lat1, lon1, lat2, lon2) => {
     const R = 3958.8;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -86,12 +103,12 @@ const DirectionsMap = () => {
     if (carMarker) {
       carMarker.setPosition(position);
     } else {
-      const newMarker = new window.google.maps.Marker({
+      const newMarker = new google.maps.Marker({
         position,
         map: mapRef.current,
         icon: {
           url: "https://www.clipartmax.com/png/small/61-616026_red-driver-marker-clip-art-at-clker-car-marker-png.png",
-          scaledSize: new window.google.maps.Size(25, 50), // sets the icon size to 50x50 pixels
+          scaledSize: new google.maps.Size(25, 50), // sets the icon size to 50x50 pixels
         },
       });
       setCarMarker(newMarker);
@@ -154,6 +171,7 @@ const DirectionsMap = () => {
 
   // To only speak the first time this one may work better.
   const directionsCallback = (response, status) => {
+    if (hasCallbackRun) return;
     if (status === "OK") {
       setDirections(response);
       // Set and display the first direction upon load
@@ -181,24 +199,25 @@ const DirectionsMap = () => {
       }
     } else {
       console.error(`Error fetching directions: ${status}`);
-      setError(`Error fetching directions: ${status}`);
+      if (status === "ZERO_RESULTS") {
+        toast.error(
+          "We're sorry, but it seems like the provided destination is not drivable or we couldn't find a route. This has been logged and we're working on a fix. You don't need to return the food."
+        );
+        // Remove the recipient from the list of sorted recipients
+        const newRecipients = [...sortedRecipients];
+        newRecipients.shift();
+        setSortedRecipients(newRecipients);
+        // Navigate back to the deliveries page
+        navigate("/deliveries");
+      } else {
+        setError(`Error fetching directions: ${status}`);
+      }
+      setHasCallbackRun(true);
     }
   };
 
   const handleMapLoad = (map) => {
     mapRef.current = map;
-    const google = window.google;
-    if (!directions) {
-      const request = {
-        origin: center,
-        destination: {
-          lat: parseFloat(foodBankLat),
-          lng: parseFloat(foodBankLng),
-        },
-        travelMode: "DRIVING",
-      };
-      new google.maps.DirectionsService().route(request, directionsCallback);
-    }
 
     if (!watchId) {
       const id = navigator.geolocation.watchPosition(
@@ -213,7 +232,7 @@ const DirectionsMap = () => {
     map.setZoom(18);
   };
 
-  if (!userLat || !userLng || !foodBankLat || !foodBankLng) {
+  if (!userLat || !userLng || !destinationLat || !destinationLng) {
     return <div>Error: Missing location parameters</div>;
   }
 
@@ -239,8 +258,8 @@ const DirectionsMap = () => {
         {directions && (
           <Marker
             position={{
-              lat: parseFloat(foodBankLat),
-              lng: parseFloat(foodBankLng),
+              lat: parseFloat(destinationLat),
+              lng: parseFloat(destinationLng),
             }}
           />
         )}
@@ -250,10 +269,20 @@ const DirectionsMap = () => {
           {directionText}
         </div>
       )}
-      {/* Display a button that says "Arrived" that when clicked it Links to the QR page */}
-      <Link to="/deliver">
-        <button className="arrived-button">Arrived</button>
-      </Link>
+      {/* if current recipient is truthy call the handleDeliveryClick otherwise link to the delivery page */}
+      {currentRecipient && (
+        <button
+          className="arrived-button"
+          onClick={() => handleDeliveryClick()}
+        >
+          Delivery Successful
+        </button>
+      )}
+      {!currentRecipient && (
+        <Link to="/deliver">
+          <button className="arrived-button">Arrived</button>
+        </Link>
+      )}
     </LoadScript>
   );
 };

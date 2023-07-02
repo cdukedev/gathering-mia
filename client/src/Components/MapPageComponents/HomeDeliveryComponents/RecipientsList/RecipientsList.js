@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Recipient from "../Recipient/Recipient";
+import { RecipientContext } from "../../../../contexts/RecipientContext";
 
-function RecipientsList({ recipients, coords }) {
+function RecipientsList({ coords, setDestination }) {
+  const { sortedRecipients } = useContext(RecipientContext);
+  console.log(sortedRecipients);
   return (
     <>
-      {recipients.map((recipient) => (
-        <Recipient key={recipient.id} recipient={recipient} coords={coords} />
+      {sortedRecipients.map((recipient) => (
+        <Recipient
+          setDestination={setDestination}
+          recipient={recipient}
+          coords={coords}
+        />
       ))}
     </>
   );
