@@ -8,7 +8,7 @@ import { CommunityGardenContext } from "../../../contexts/CommunityGardenContext
 import { FoodBankContext } from "../../../contexts/FoodBankContext";
 
 function MapFilter() {
-  const { menu, handleMenuClick } = useContext(MapPageContext);
+  const { handleMenuClick } = useContext(MapPageContext);
   const { communityGardenToggle, handleCommunityGardenToggle } = useContext(
     CommunityGardenContext
   );
