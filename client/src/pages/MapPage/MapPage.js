@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import MapDeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapDeliveriesWrapper/MapDeliveriesWrapper";
+import FoodBankChoiceWrapper from "../../Components/MapPageComponents/MapPageWrappers/FoodBankChoiceWrapper/FoodBankChoiceWrapper";
 import Splash from "../../Components/Splash/Splash";
 import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/DeliveriesWrapper/DeliveriesWrapper";
 import MapHelpWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapHelpWrapper/MapHelpWrapper";
@@ -29,8 +29,8 @@ const MapPage = () => {
 
       {coords && (
         <div className="map-page">
-          {menu === "mapDeliveries" && (
-            <MapDeliveriesWrapper
+          {menu === "FoodBankChoice" && (
+            <FoodBankChoiceWrapper
               handleMenuClick={handleMenuClick}
               foodBanks={foodBanks}
               coords={coords}

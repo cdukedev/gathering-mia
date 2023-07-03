@@ -1,9 +1,9 @@
 import React from "react";
 import Map from "../../Map/Map";
-import MapDeliveries from "../../MapDeliveries/MapDeliveries";
+import FoodBankChoice from "../../FoodBanksChoice/FoodBankChoice";
 import BackButton from "../../../BackButton/BackButton";
 
-const MapDeliveriesWrapper = ({
+const FoodBankChoiceWrapper = ({
   handleMenuClick,
   handleDeliveryClick,
   foodBanks,
@@ -11,7 +11,7 @@ const MapDeliveriesWrapper = ({
 }) => (
   <div className="map-deliveries">
     <Map height="calc(100vh - 280px)" />
-    <MapDeliveries
+    <FoodBankChoice
       handleMenuClick={handleMenuClick}
       handleDeliveryClick={handleDeliveryClick}
       foodBanks={foodBanks}
@@ -21,4 +21,4 @@ const MapDeliveriesWrapper = ({
   </div>
 );
 
-export default MapDeliveriesWrapper;
+export default FoodBankChoiceWrapper;

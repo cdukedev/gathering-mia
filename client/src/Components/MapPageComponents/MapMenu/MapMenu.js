@@ -31,7 +31,7 @@ function MapMenu() {
         />
         <img
           onClick={() => {
-            handleMenuClick("mapDeliveries");
+            handleMenuClick("FoodBankChoice");
           }}
           src={searchButton}
           alt="search button"

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./MapDeliveries.scss";
+import "./FoodBankChoice.scss";
 import MapMenuArrow from "../../../assets/icons/map-menu-arrow.svg";
 import { MapPageContext } from "../../../contexts/MapPageContext";
 import { GeolocationContext } from "../../../contexts/GeolocationContext";
@@ -7,7 +7,7 @@ import { RecipientContext } from "../../../contexts/RecipientContext";
 import { FoodBankContext } from "../../../contexts/FoodBankContext";
 import { useNavigate } from "react-router-dom";
 
-function MapDeliveries() {
+function FoodBankChoice() {
   const { handleMenuClick } = useContext(MapPageContext);
   const { coords } = useContext(GeolocationContext); // Consume GeolocationContext
   const { foodBanks } = useContext(FoodBankContext); // Consume FoodBankContext
@@ -109,4 +109,4 @@ function MapDeliveries() {
   );
 }
 
-export default MapDeliveries;
+export default FoodBankChoice;
