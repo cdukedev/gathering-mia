@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import "./DirectionsMap.scss";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { RecipientContext } from "../../contexts/RecipientContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
@@ -107,8 +107,9 @@ const DirectionsMap = () => {
         position,
         map: mapRef.current,
         icon: {
-          url: "https://www.clipartmax.com/png/small/61-616026_red-driver-marker-clip-art-at-clker-car-marker-png.png",
-          scaledSize: new google.maps.Size(25, 50), // sets the icon size to 50x50 pixels
+          url: "https://images.vexels.com/media/users/3/154573/isolated/preview/bd08e000a449288c914d851cb9dae110-hatchback-car-top-view-silhouette-by-vexels.png",
+          scaledSize: new google.maps.Size(20, 20),
+          anchor: { x: 10, y: 10 },
         },
       });
       setCarMarker(newMarker);
@@ -121,6 +122,7 @@ const DirectionsMap = () => {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     };
+    console.log("New position:", newPosition); // Log the new position
     updateCarMarker(newPosition);
     if (directions) {
       if (currentStepIndex < directions.routes[0].legs[0].steps.length) {
@@ -258,11 +260,19 @@ const DirectionsMap = () => {
             }}
           />
         )}
+        <Marker
+          position={{
+            lat: parseFloat(destinationLat),
+            lng: parseFloat(destinationLng),
+          }}
+        />
         {directions && (
           <Marker
-            position={{
-              lat: parseFloat(destinationLat),
-              lng: parseFloat(destinationLng),
+            position={userPosition}
+            icon={{
+              url: "https://images.vexels.com/media/users/3/154573/isolated/preview/bd08e000a449288c914d851cb9dae110-hatchback-car-top-view-silhouette-by-vexels.png",
+              scaledSize: new window.google.maps.Size(20, 20),
+              anchor: new window.google.maps.Point(10, 10),
             }}
           />
         )}
