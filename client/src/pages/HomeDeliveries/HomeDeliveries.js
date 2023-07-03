@@ -7,6 +7,8 @@ import HomeDeliveriesSplash from "./HomeDeliveriesSplash";
 import RecipientsList from "../../Components/MapPageComponents/HomeDeliveryComponents/RecipientsList/RecipientsList";
 import { findOptimalPath } from "../../utils/pathFinding";
 import DirectionsMap from "../DirectionsMap/DirectionsMap";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function HomeDeliveries() {
   // State
@@ -86,6 +88,7 @@ function HomeDeliveries() {
   } else {
     return (
       <div className="deliveries__container">
+        <ToastContainer />
         <h3 className="deliveries__top-row--header">
           Deliver in the order given for the shortest total trip.
         </h3>

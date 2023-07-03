@@ -201,7 +201,10 @@ const DirectionsMap = () => {
       console.error(`Error fetching directions: ${status}`);
       if (status === "ZERO_RESULTS") {
         toast.error(
-          "We're sorry, but it seems like the provided destination is not drivable or we couldn't find a route. This has been logged and we're working on a fix. You don't need to return the food."
+          "We apologize for the inconvenience, we were unable to locate a route. Our team has been notified and is currently working on a solution. In the meantime, please don't worry about returning the food. Thank you for your understanding.",
+          {
+            autoClose: 13000,
+          }
         );
         // Remove the recipient from the list of sorted recipients
         const newRecipients = [...sortedRecipients];
