@@ -1,16 +1,7 @@
-## GatheringMIA
-
-DRONES FOR GOOD
-https://www.restaurantware.com/blog/post/how-do-drone-food-delivery-services-work/
-
-https://cmr.berkeley.edu/2022/03/autonomous-drones-a-game-changer-in-lightweight-delivery-services/
-
-https://www.dronedek.com/news/how-much-weight-can-a-delivery-drone-carry/
-
-https://dronenewsco.com/how-much-weight-can-a-delivery-drone-carry/
+# GatheringMIA
 
 GatheringMia
-[Click here to navigate to site](https://gatheringmia.herokuapp.com/)(intended to be viewed as a mobile web application)
+[Click here to navigate to site](https://gathering-mia.live/)(intended to be viewed as a mobile web application)
 A mobile web application that streamlines the process for volunteers that deliver meals from foodbanks to homebound individuals, providing orted list of recipients from any chosen foodbank. The application will given pickup and delivery instructions. Once Packages are picked up from food bank location the app will provide a list of all the dropoff locations of the recipients. The directions provided will be an optimal route to ensure the volunteer drives either the least amount of time or miles.
 
 ## Project Backstory
@@ -22,14 +13,14 @@ Originally I wanted to build an application that allowed users to find community
 ## Project Status
 
 TO-DO items include
+Build the Backend
 OAuth and user signup
-Create radius for delivery location to block out of range deliveries
+Create a way to have the map provide directions within the apps map
+Give user option between least amount of miles or driving duration for deliveries
+Give user the option to change the order of deliveries
+Ensure each delivery was dropped off
 Once delivery was confirmed add delivery count to the recipient for the week.
-50% complete -- Add tests using Cypress/jest
-complete -- Create a way to have the map provide directions within the apps map
-complete -- Give user the option to change the order of deliveries
-complete -- Ensure each delivery was dropped off
-complete -- Build the Backend
+Add tests using Cypress
 
 #### Stage of Progress:
 
@@ -47,7 +38,7 @@ To Visit App:
 
 View intented as a mobile web application
 
-https://gatheringmia.herokuapp.com/
+https://gathering-mia.live/
 
 ## Reflection
 
@@ -58,3 +49,36 @@ https://gatheringmia.herokuapp.com/
 - Creating the algorithm for users distance was fun to work with and provided a challenge to ensure that I was providing optimal routes.
   Another challenge was creating a way to have the map provide directions within the apps map
 - The technologies implemented in this project are React, React-Router-Dom 5.3, React-Google-Maps, Sass, JSX, Figma, and Github.
+
+ChatGPT:
+
+- # GatheringMIA: A Meal Delivery Assistance Mobile Web App
+
+GatheringMIA is a [mobile web application](https://gathering-mia.live/) designed to assist volunteers in meal delivery efforts from foodbanks to homebound individuals. The application provides an assorted list of recipients from any chosen foodbank along with detailed pickup and delivery instructions. Once meals are collected from the food bank, the app presents an optimally routed list of all drop-off locations. The routing algorithm ensures minimal drive time or distance for volunteers.
+
+## Project Context and Objectives
+
+GatheringMIA originated during the fourth module of the Brainstation Web Development Bootcamp, where the primary goal was to apply the acquired skills while exploring new technologies. The initial concept revolved around a community garden locator and a crowdsourced fruit tree database. However, preliminary research revealed a more pressing need: optimizing the process for volunteers delivering meals from foodbanks. This motivated a shift in the project's direction towards developing GatheringMIA. The application's initial design and layout were created in Figma, with `create-react-app` serving as the project boilerplate and `react-router-5.3` for routing.
+
+## Current Development Status
+
+GatheringMIA is currently in development. Planned enhancements include:
+
+- Backend development
+- Implementing OAuth and user signup functionality
+- Integrating in-app map directions
+- Providing an option to choose the least time or distance-based routing for deliveries
+- Allowing users to modify the order of deliveries
+- Verifying each delivery drop-off
+- Updating weekly delivery counts per recipient after each successful delivery
+- Incorporating Cypress for testing
+
+## Installation Guide
+
+To setup GatheringMIA locally, ensure that `node` and `npm` are installed on your system. Clone the repository and execute `npm install` for the necessary dependencies.
+
+To access the application, navigate to [GatheringMIA](https://gathering-mia.live/) (optimized for mobile web view).
+
+## Retrospective
+
+GatheringMIA has been an inspiring journey, providing an opportunity to develop a solution with significant potential societal impact. The project scope broadened as I continually added features, with the desire to create a more comprehensive solution. I thoroughly enjoyed the unique experience of integrating Google Maps APIs in a React context and creating the optimal routing algorithm. The key technologies implemented in this project include React, React-Router-Dom 5.3, React-Google-Maps, Sass, JSX, Figma, and GitHub.
