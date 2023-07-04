@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Splash.scss";
 import splashLogo from "../../assets/images/splash-logo.png";
 

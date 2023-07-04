@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import FoodBankChoiceWrapper from "../../Components/MapPageComponents/MapPageWrappers/FoodBankChoiceWrapper/FoodBankChoiceWrapper";
+import FoodBankChoiceWrapper from "../../Components/MapPageComponents/MapPageLayoutWrappers/FoodBankChoiceWrapper/FoodBankChoiceWrapper";
 import Splash from "../../Components/Splash/Splash";
-import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageWrappers/DeliveriesWrapper/DeliveriesWrapper";
-import MapHelpWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapHelpWrapper/MapHelpWrapper";
-import DefaultMenuWrapper from "../../Components/MapPageComponents/MapPageWrappers/DefaultMenuWrapper/DefaultMenuWrapper";
-import MapFilterWrapper from "../../Components/MapPageComponents/MapPageWrappers/MapFilterWrapper/MapFilterWrapper";
+import DeliveriesWrapper from "../../Components/MapPageComponents/MapPageLayoutWrappers/DeliveriesWrapper/DeliveriesWrapper";
+import MapHelpWrapper from "../../Components/MapPageComponents/MapPageLayoutWrappers/MapHelpWrapper/MapHelpWrapper";
+import DefaultMenuWrapper from "../../Components/MapPageComponents/MapPageLayoutWrappers/DefaultMenuWrapper/DefaultMenuWrapper";
+import MapFilterWrapper from "../../Components/MapPageComponents/MapPageLayoutWrappers/MapFilterWrapper/MapFilterWrapper";
 import QrScanner from "../../Components/MapPageComponents/HomeDeliveryComponents/QRScanner/QRScanner";
 import { MapPageContext } from "../../contexts/MapPageContext";
 import { GeolocationContext } from "../../contexts/GeolocationContext";

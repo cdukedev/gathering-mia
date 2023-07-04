@@ -1,6 +1,10 @@
 import React, { createContext, useState, useCallback } from "react";
 import communityGardens from "../data/communityGardens.json";
 
+// *****************************************************
+// Need to add recipients to AWS RNS Database
+// *****************************************************
+
 const CommunityGardenContext = createContext();
 
 const CommunityGardenProvider = ({ children }) => {

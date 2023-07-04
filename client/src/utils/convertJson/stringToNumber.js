@@ -1,5 +1,10 @@
 const fs = require("fs");
 
+/**
+ * Converts the zone and id properties of each recipient in the given recipients array to integers.
+ * @param {Array} recipients - The array containing the recipients' data.
+ * @return {Array} - The modified recipients array with integer values for zone and id.
+ */
 // function convertZoneAndIdToInt(recipients) {
 //   return recipients.map((recipient) => {
 //     return {
@@ -9,6 +14,8 @@ const fs = require("fs");
 //     };
 //   });
 // }
+
+// Uncomment the code below if you want to use the `convertZoneAndIdToInt` function
 
 // const recipientsWithIntZoneAndId = convertZoneAndIdToInt(recipients);
 
@@ -24,6 +31,12 @@ const fs = require("fs");
 //   }
 // );
 
+/**
+ * Converts the coordinates in the given jsonData to integers with the specified number of decimal points.
+ * @param {Array} jsonData - The JSON array containing the coordinates.
+ * @param {number} decimalPoints - The number of decimal points to round to (default is 7).
+ * @return {Array} - The modified jsonData with rounded coordinates.
+ */
 function convertCoordinatesToInt(jsonData, decimalPoints = 7) {
   jsonData.forEach((entry) => {
     entry.position.lat = Number(

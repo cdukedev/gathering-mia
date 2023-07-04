@@ -927,6 +927,11 @@ const data = [
   },
 ];
 
+/**
+ * Converts the given data array to a new format with specific properties.
+ * @param {Array} data - The array containing the original data.
+ * @return {Array} - The converted data array with updated properties.
+ */
 function convertJson(data) {
   var newData = [];
   for (var i = 0; i < data.length; i++) {
@@ -942,6 +947,7 @@ function convertJson(data) {
   }
   return newData;
 }
+
 
 console.log(convertJson(data));
 

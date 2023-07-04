@@ -37,6 +37,7 @@
             &--container{
                 height: 90vh;
                 overflow: auto;
+                padding-bottom: 13vh;
             }
             &-left{
                 width: 60%;
@@ -59,25 +60,24 @@
 }
 .top-row-button{
     display: flex;
-    justify-items: center;
-    text-align: center;
-    flex-direction: row;
-    margin: 3vw;
-    margin-bottom:6vh;
     width: 94vw;
-    height: 15vh;
+    padding: 6vh 0;
     background-color: #40474C;
     border-radius: 15px;
-    overflow: hidden;
-    perspective: 1px;
-    color: #DF8363;
-    text-decoration: underline;
-    padding-top: 5vh;
     font-size: larger;
     &--text{
-        margin:0;
-        margin-left: 45%;
-        text-align: center;
-        display: flex;
+        color: #DF8363;
+        padding: 0 2vh;
     }
+}
+.amazing__container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    &-image{
+        width: 100vw;
+        padding-bottom: 6vh;
     }
+}

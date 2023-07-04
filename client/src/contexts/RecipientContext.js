@@ -1,10 +1,12 @@
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import axios from "axios";
-// import recipients from "../data/recipients.json";
 
+// Create a context to share recipient data
 const RecipientContext = createContext();
 
+// Provider component for managing recipients
 const RecipientProvider = ({ children }) => {
+  // State variables
   const [zone, setZone] = useState(null);
   const [recipients, setRecipients] = useState(null);
   const [currentRecipient, setCurrentRecipient] = useState(null);
@@ -12,10 +14,18 @@ const RecipientProvider = ({ children }) => {
   const [sortedRecipients, setSortedRecipients] = useState([]);
   const [error, setError] = useState(null);
 
+  /**
+   * Handle delivery click event.
+   *
+   * @param {boolean} clicked - Whether or not the delivery was clicked.
+   * @param {string} clickedZone - The zone of the clicked delivery.
+   * @stateChange zone.
+   */
   const handleDeliveryClick = useCallback((clicked, clickedZone) => {
     setZone(clickedZone);
   }, []);
 
+  // Fetch recipients data on component mount
   useEffect(() => {
     axios
       .get("https://dwka6a2xd6.execute-api.us-east-1.amazonaws.com/recipients")
@@ -31,6 +41,7 @@ const RecipientProvider = ({ children }) => {
       });
   }, []);
 
+  // Provide the context value to components that consume the RecipientContext
   const contextValue = {
     zone,
     recipients,
