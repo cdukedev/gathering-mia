@@ -16,7 +16,7 @@ function HomeDeliveries() {
     lng: -80.6620736,
   }); // Plans: In the future, the finalDestination will be set by the user prior to making their deliveries, their destination will be stored so that when they log in, their destination can be loaded as the default.
 
-  const [deliveryCapacity, setDeliveryCapacity] = useState(1); // Plans: In the future, the capacity will be set by the user in their profile.
+  const [deliveryCapacity, setDeliveryCapacity] = useState(5); // Plans: In the future, the capacity will be set by the user in their profile.
 
   const [loading, setLoading] = useState(true);
 
