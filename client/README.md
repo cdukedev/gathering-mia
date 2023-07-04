@@ -1,5 +1,14 @@
 ## GatheringMIA
 
+DRONES FOR GOOD
+https://www.restaurantware.com/blog/post/how-do-drone-food-delivery-services-work/
+
+https://cmr.berkeley.edu/2022/03/autonomous-drones-a-game-changer-in-lightweight-delivery-services/
+
+https://www.dronedek.com/news/how-much-weight-can-a-delivery-drone-carry/
+
+https://dronenewsco.com/how-much-weight-can-a-delivery-drone-carry/
+
 GatheringMia
 [Click here to navigate to site](https://gatheringmia.herokuapp.com/)(intended to be viewed as a mobile web application)
 A mobile web application that streamlines the process for volunteers that deliver meals from foodbanks to homebound individuals, providing orted list of recipients from any chosen foodbank. The application will given pickup and delivery instructions. Once Packages are picked up from food bank location the app will provide a list of all the dropoff locations of the recipients. The directions provided will be an optimal route to ensure the volunteer drives either the least amount of time or miles.
@@ -13,14 +22,14 @@ Originally I wanted to build an application that allowed users to find community
 ## Project Status
 
 TO-DO items include
-Build the Backend
 OAuth and user signup
-Create a way to have the map provide directions within the apps map
-Give user option between least amount of miles or driving duration for deliveries
-Give user the option to change the order of deliveries
-Ensure each delivery was dropped off
+Create radius for delivery location to block out of range deliveries
 Once delivery was confirmed add delivery count to the recipient for the week.
-Add tests using Cypress
+50% complete -- Add tests using Cypress/jest
+complete -- Create a way to have the map provide directions within the apps map
+complete -- Give user the option to change the order of deliveries
+complete -- Ensure each delivery was dropped off
+complete -- Build the Backend
 
 #### Stage of Progress:
 
