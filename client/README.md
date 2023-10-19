@@ -1,7 +1,7 @@
 ## GatheringMIA
 
 GatheringMia
-[Click here to navigate to site](https://gatheringmia.herokuapp.com/)(intended to be viewed as a mobile web application)
+[Click here to navigate to site](https://develop.d3d9kolrqh2fvt.amplifyapp.com/map)(intended to be viewed as a mobile web application)
 A mobile web application that streamlines the process for volunteers that deliver meals from foodbanks to homebound individuals, providing orted list of recipients from any chosen foodbank. The application will given pickup and delivery instructions. Once Packages are picked up from food bank location the app will provide a list of all the dropoff locations of the recipients. The directions provided will be an optimal route to ensure the volunteer drives either the least amount of time or miles.
 
 ## Project Backstory
